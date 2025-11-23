@@ -94,7 +94,7 @@ class AnomCAT {
                 const monthsElapsed = elapsed / (1000 * 60 * 60 * 24 * 30);
                 
                 // Calculate compounded growth
-                const growth = this.portfolio.current * Math.pow(1 + this.monthlyReturn, monthsElapsed) - this.portfolio.current;
+                const growth = this.portfolio.current * ((1 + this.monthlyReturn) ** monthsElapsed) - this.portfolio.current;
                 
                 if (growth > 0.00000001) { // Only update if meaningful growth
                     this.portfolio.current += growth;
