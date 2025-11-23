@@ -384,7 +384,7 @@ body::before {
 }
 
 .feed-content::-webkit-scrollbar {
-    width: 8px;
+    width: 12px;
 }
 
 .feed-content::-webkit-scrollbar-track {

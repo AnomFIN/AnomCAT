@@ -16,6 +16,7 @@ self.addEventListener('install', event => {
         console.log('Opened cache');
         return cache.addAll(urlsToCache);
       })
+      .then(() => self.skipWaiting())
   );
 });
 
@@ -46,6 +47,6 @@ self.addEventListener('activate', event => {
           }
         })
       );
-    })
+    }).then(() => self.clients.claim())
   );
 });

@@ -50,7 +50,9 @@
                 </div>
                 
                 <div class="portfolio-chart" id="portfolioChart">
-                    <canvas id="chartCanvas"></canvas>
+                    <canvas id="chartCanvas" aria-label="Portfolio growth chart showing Bitcoin value over time" role="img">
+                        Portfolio growth chart showing Bitcoin value over time. The chart visualizes your Bitcoin portfolio's value changes. If you cannot view the chart, please refer to the statistics below.
+                    </canvas>
                 </div>
                 
                 <div class="portfolio-stats">
@@ -84,7 +86,7 @@
                         >
                         <span class="input-suffix">BTC</span>
                     </div>
-                    <button class="btn btn-primary" id="depositBtn">
+                    <button class="btn btn-primary" id="depositBtn" aria-label="Deposit Bitcoin and start trading bot">
                         <span class="btn-text">Deposit & Start Bot</span>
                     </button>
                 </div>
@@ -118,8 +120,8 @@
             <section class="section feed-section">
                 <h2 class="section-title">Bitcoin Network Feed</h2>
                 <div class="feed-tabs">
-                    <button class="feed-tab active" data-feed="mempool">Mempool</button>
-                    <button class="feed-tab" data-feed="blocks">Blocks</button>
+                    <button class="feed-tab active" data-feed="mempool" role="tab" aria-selected="true">Mempool</button>
+                    <button class="feed-tab" data-feed="blocks" role="tab" aria-selected="false">Blocks</button>
                 </div>
                 <div class="feed-content" id="feedContent">
                     <div class="feed-item">

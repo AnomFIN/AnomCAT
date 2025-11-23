@@ -14,6 +14,12 @@ class AnomCAT {
         this.lastUpdate = Date.now();
         this.currentFeed = 'mempool';
         
+        // Constants
+        this.UPDATE_INTERVAL = 5000; // 5 seconds
+        this.FEED_UPDATE_INTERVAL = 10000; // 10 seconds
+        this.MIN_BTC_GROWTH_THRESHOLD = 0.00000001; // 1 satoshi
+        this.DAYS_PER_MONTH = 30.436875; // Average days per month (365.2425/12)
+        
         this.init();
     }
 
@@ -58,7 +64,7 @@ class AnomCAT {
         const amount = parseFloat(document.getElementById('depositAmount').value);
         
         if (isNaN(amount) || amount <= 0) {
-            alert('Please enter a valid BTC amount');
+            alert('Please enter a valid BTC amount greater than 0');
             return;
         }
 
@@ -91,12 +97,12 @@ class AnomCAT {
             if (this.botActive && this.portfolio.current > 0) {
                 const now = Date.now();
                 const elapsed = now - this.lastUpdate;
-                const monthsElapsed = elapsed / (1000 * 60 * 60 * 24 * 30);
+                const monthsElapsed = elapsed / (1000 * 60 * 60 * 24 * this.DAYS_PER_MONTH);
                 
                 // Calculate compounded growth
                 const growth = this.portfolio.current * ((1 + this.monthlyReturn) ** monthsElapsed) - this.portfolio.current;
                 
-                if (growth > 0.00000001) { // Only update if meaningful growth
+                if (growth > this.MIN_BTC_GROWTH_THRESHOLD) { // Only update if meaningful growth
                     this.portfolio.current += growth;
                     this.lastUpdate = now;
                     
@@ -123,7 +129,7 @@ class AnomCAT {
                     }
                 }
             }
-        }, 5000); // Update every 5 seconds
+        }, this.UPDATE_INTERVAL);
     }
 
     simulateTrade(type, amount) {
@@ -263,6 +269,18 @@ class AnomCAT {
         gradient.addColorStop(1, 'rgba(0, 243, 255, 0)');
         ctx.fillStyle = gradient;
         
+        // Rebuild the path for filling
+        ctx.beginPath();
+        this.portfolio.history.forEach((point, index) => {
+            const x = (index / (this.portfolio.history.length - 1)) * width;
+            const y = height - ((point.value - minValue + padding) / (range + padding * 2)) * height;
+            
+            if (index === 0) {
+                ctx.moveTo(x, y);
+            } else {
+                ctx.lineTo(x, y);
+            }
+        });
         ctx.lineTo(width, height);
         ctx.lineTo(0, height);
         ctx.closePath();
@@ -287,7 +305,7 @@ class AnomCAT {
         
         setInterval(() => {
             this.updateNetworkFeed();
-        }, 10000); // Update every 10 seconds
+        }, this.FEED_UPDATE_INTERVAL);
     }
 
     updateNetworkFeed() {
@@ -374,12 +392,11 @@ class AnomCAT {
     switchFeed(feed) {
         this.currentFeed = feed;
         
-        // Update tab styles
+        // Update tab styles and ARIA attributes
         document.querySelectorAll('.feed-tab').forEach(tab => {
-            tab.classList.remove('active');
-            if (tab.dataset.feed === feed) {
-                tab.classList.add('active');
-            }
+            const isActive = tab.dataset.feed === feed;
+            tab.classList.toggle('active', isActive);
+            tab.setAttribute('aria-selected', isActive);
         });
 
         // Clear feed content
@@ -404,8 +421,8 @@ class AnomCAT {
     saveToStorage() {
         try {
             localStorage.setItem('anomcat_portfolio', JSON.stringify(this.portfolio));
-            localStorage.setItem('anomcat_bot_active', this.botActive);
-            localStorage.setItem('anomcat_last_update', this.lastUpdate);
+            localStorage.setItem('anomcat_bot_active', JSON.stringify(this.botActive));
+            localStorage.setItem('anomcat_last_update', JSON.stringify(this.lastUpdate));
         } catch (e) {
             console.error('Failed to save to localStorage:', e);
         }
@@ -420,12 +437,12 @@ class AnomCAT {
 
             const botActive = localStorage.getItem('anomcat_bot_active');
             if (botActive !== null) {
-                this.botActive = botActive === 'true';
+                this.botActive = JSON.parse(botActive);
             }
 
             const lastUpdate = localStorage.getItem('anomcat_last_update');
             if (lastUpdate) {
-                this.lastUpdate = parseInt(lastUpdate);
+                this.lastUpdate = JSON.parse(lastUpdate);
             }
         } catch (e) {
             console.error('Failed to load from localStorage:', e);
