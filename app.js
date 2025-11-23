@@ -243,23 +243,34 @@ class AnomCAT {
             ctx.stroke();
         }
 
+        // Helper function to build chart path
+        const buildChartPath = (ctx, closeToBottom = false) => {
+            ctx.beginPath();
+            this.portfolio.history.forEach((point, index) => {
+                const x = (index / (this.portfolio.history.length - 1)) * width;
+                const y = height - ((point.value - minValue + padding) / (range + padding * 2)) * height;
+                
+                if (index === 0) {
+                    ctx.moveTo(x, y);
+                } else {
+                    ctx.lineTo(x, y);
+                }
+            });
+            
+            if (closeToBottom) {
+                ctx.lineTo(width, height);
+                ctx.lineTo(0, height);
+                ctx.closePath();
+            }
+        };
+
         // Draw chart line
         ctx.strokeStyle = '#00f3ff';
         ctx.lineWidth = 2;
         ctx.shadowBlur = 10;
         ctx.shadowColor = '#00f3ff';
         
-        ctx.beginPath();
-        this.portfolio.history.forEach((point, index) => {
-            const x = (index / (this.portfolio.history.length - 1)) * width;
-            const y = height - ((point.value - minValue + padding) / (range + padding * 2)) * height;
-            
-            if (index === 0) {
-                ctx.moveTo(x, y);
-            } else {
-                ctx.lineTo(x, y);
-            }
-        });
+        buildChartPath(ctx);
         ctx.stroke();
 
         // Draw gradient fill
@@ -269,21 +280,7 @@ class AnomCAT {
         gradient.addColorStop(1, 'rgba(0, 243, 255, 0)');
         ctx.fillStyle = gradient;
         
-        // Rebuild the path for filling
-        ctx.beginPath();
-        this.portfolio.history.forEach((point, index) => {
-            const x = (index / (this.portfolio.history.length - 1)) * width;
-            const y = height - ((point.value - minValue + padding) / (range + padding * 2)) * height;
-            
-            if (index === 0) {
-                ctx.moveTo(x, y);
-            } else {
-                ctx.lineTo(x, y);
-            }
-        });
-        ctx.lineTo(width, height);
-        ctx.lineTo(0, height);
-        ctx.closePath();
+        buildChartPath(ctx, true);
         ctx.fill();
 
         // Draw current value point
@@ -396,7 +393,7 @@ class AnomCAT {
         document.querySelectorAll('.feed-tab').forEach(tab => {
             const isActive = tab.dataset.feed === feed;
             tab.classList.toggle('active', isActive);
-            tab.setAttribute('aria-selected', isActive);
+            tab.setAttribute('aria-selected', isActive.toString());
         });
 
         // Clear feed content
