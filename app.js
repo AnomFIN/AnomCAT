@@ -314,14 +314,14 @@ class AnomCAT {
         const txTypes = [
             { icon: '💸', text: 'New transaction: {amount} BTC | Fee: {fee} sat/vB' },
             { icon: '⚡', text: 'Lightning channel opened: {amount} BTC capacity' },
-            { icon: '🔄', text: 'Transaction confirmed in mempool: {size} vB' },
-            { icon: '📊', text: 'Mempool size: {size} MB | {count} pending transactions' }
+            { icon: '🔄', text: 'Transaction confirmed in mempool: {txsize} vB' },
+            { icon: '📊', text: 'Mempool size: {mempoolsize} MB | {count} pending transactions' }
         ];
 
         const type = txTypes[Math.floor(Math.random() * txTypes.length)];
         const amount = (Math.random() * 10 + 0.1).toFixed(4);
         const fee = Math.floor(Math.random() * 50 + 10);
-        const size = Math.floor(Math.random() * 500 + 100);
+        const txSize = Math.floor(Math.random() * 500 + 100);
         const mempoolSize = Math.floor(Math.random() * 100 + 50);
         const count = Math.floor(Math.random() * 50000 + 10000);
 
@@ -330,7 +330,8 @@ class AnomCAT {
             text: type.text
                 .replace('{amount}', amount)
                 .replace('{fee}', fee)
-                .replace('{size}', mempoolSize)
+                .replace('{txsize}', txSize)
+                .replace('{mempoolsize}', mempoolSize)
                 .replace('{count}', count)
         };
     }
