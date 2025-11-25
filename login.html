@@ -90,19 +90,52 @@
 
     <script src="assets/js/app.js"></script>
     <script>
+        // Load user data hint
+        async function loadUserHint() {
+            try {
+                const response = await fetch('assets/data/users.json');
+                if (response.ok) {
+                    const data = await response.json();
+                    if (data.demoCredentials) {
+                        const emailInput = document.getElementById('email');
+                        emailInput.placeholder = data.demoCredentials.email;
+                    }
+                }
+            } catch (e) {
+                console.log('Using default demo mode');
+            }
+        }
+        
+        loadUserHint();
+        
         document.getElementById('loginForm').addEventListener('submit', function(e) {
             e.preventDefault();
-            // Demo mode - redirect to home
-            window.location.href = 'home.html';
+            const email = document.getElementById('email').value;
+            
+            // Validate user via AnomCAT
+            const validation = AnomCAT.validateUser(email);
+            if (validation.valid) {
+                // Store user info
+                localStorage.setItem('anomcat_user', JSON.stringify(validation.user));
+                window.location.href = 'home.html';
+            }
         });
         
         document.getElementById('googleLogin').addEventListener('click', function() {
-            // Demo mode - redirect to home
+            // Demo mode - create demo user
+            localStorage.setItem('anomcat_user', JSON.stringify({
+                email: 'demo@anomcat.io',
+                name: 'Demo User (Google)'
+            }));
             window.location.href = 'home.html';
         });
         
         document.getElementById('appleLogin').addEventListener('click', function() {
-            // Demo mode - redirect to home
+            // Demo mode - create demo user
+            localStorage.setItem('anomcat_user', JSON.stringify({
+                email: 'demo@anomcat.io',
+                name: 'Demo User (Apple)'
+            }));
             window.location.href = 'home.html';
         });
     </script>

@@ -16,6 +16,8 @@
 const DAYS_PER_MONTH = 30.436875; // Average days per month (365.2425/12)
 const SATOSHI_THRESHOLD = 0.00000001; // 1 satoshi minimum for updates
 const DEFAULT_BTC_EUR_RATE = 45000; // Default BTC/EUR exchange rate
+const CHART_DATA_URL = 'assets/data/chart-data.json';
+const USERS_DATA_URL = 'assets/data/users.json';
 
 // ============================================
 // Global State Management
@@ -45,7 +47,13 @@ const AnomCAT = {
     intervals: {
         portfolio: null,
         chart: null
-    }
+    },
+    
+    // Default chart data (loaded from JSON)
+    defaultChartData: null,
+    
+    // Users data (loaded from JSON)
+    usersData: null
 };
 
 // ============================================
@@ -57,6 +65,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 AnomCAT.init = function() {
     this.loadFromStorage();
+    this.loadDefaultData();
     this.initCurrencyToggle();
     this.initNavigation();
     this.updateAllDisplays();
@@ -66,6 +75,77 @@ AnomCAT.init = function() {
     if (this.isAuthenticatedPage()) {
         this.startPortfolioUpdates();
     }
+};
+
+// ============================================
+// Data Loading from JSON
+// ============================================
+AnomCAT.loadDefaultData = async function() {
+    try {
+        // Load chart data
+        const chartResponse = await fetch(CHART_DATA_URL);
+        if (chartResponse.ok) {
+            this.defaultChartData = await chartResponse.json();
+        }
+    } catch (e) {
+        console.log('Chart data will use generated values:', e.message);
+    }
+    
+    try {
+        // Load users data
+        const usersResponse = await fetch(USERS_DATA_URL);
+        if (usersResponse.ok) {
+            this.usersData = await usersResponse.json();
+        }
+    } catch (e) {
+        console.log('Users data not available:', e.message);
+    }
+};
+
+AnomCAT.validateUser = function(email) {
+    if (!this.usersData || !this.usersData.users) {
+        // In demo mode, any email works
+        return { valid: true, user: { email: email, name: 'Demo User' } };
+    }
+    
+    const user = this.usersData.users.find(u => u.email.toLowerCase() === email.toLowerCase());
+    if (user) {
+        return { valid: true, user: user };
+    }
+    
+    // In demo mode, still allow any email
+    return { valid: true, user: { email: email, name: 'Guest User' } };
+};
+
+AnomCAT.getDefaultChartData = function() {
+    if (this.defaultChartData && this.defaultChartData.portfolioHistory) {
+        return this.defaultChartData.portfolioHistory.map(point => ({
+            time: new Date(point.date).getTime(),
+            value: this.currency === 'EUR' ? point.eurValue : point.btcValue
+        }));
+    }
+    return null;
+};
+
+AnomCAT.getMonthlyPerformance = function() {
+    if (this.defaultChartData && this.defaultChartData.monthlyPerformance) {
+        return this.defaultChartData.monthlyPerformance;
+    }
+    return null;
+};
+
+AnomCAT.getTradingActivity = function() {
+    if (this.defaultChartData && this.defaultChartData.tradingActivity) {
+        return this.defaultChartData.tradingActivity;
+    }
+    return null;
+};
+
+AnomCAT.getDefaultSummary = function() {
+    if (this.defaultChartData && this.defaultChartData.summary) {
+        return this.defaultChartData.summary;
+    }
+    return null;
 };
 
 // ============================================
@@ -498,12 +578,13 @@ AnomCAT.formatRelativeTime = function(timestamp) {
 // Chart Utilities (used by pages with charts)
 // ============================================
 AnomCAT.generateChartData = function(days = 30) {
-    const data = [];
-    const now = Date.now();
-    const startValue = this.portfolio.initialBtc || 1;
-    let currentValue = startValue;
+    // First, try to use loaded JSON data
+    const defaultData = this.getDefaultChartData();
+    if (defaultData && defaultData.length > 0) {
+        return defaultData;
+    }
     
-    // If we have history data, use it
+    // If we have user history data, use it
     if (this.portfolio.history.length > 1) {
         return this.portfolio.history.map(point => ({
             time: point.time,
@@ -511,7 +592,12 @@ AnomCAT.generateChartData = function(days = 30) {
         }));
     }
     
-    // Generate mock data for display
+    // Generate fallback data for display
+    const data = [];
+    const now = Date.now();
+    const startValue = this.portfolio.initialBtc || 1;
+    let currentValue = startValue;
+    
     for (let i = days; i >= 0; i--) {
         const time = now - (i * 24 * 60 * 60 * 1000);
         // Simulate growth with some variance

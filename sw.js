@@ -12,6 +12,8 @@ const urlsToCache = [
   '/settings.html',
   '/assets/css/style.css',
   '/assets/js/app.js',
+  '/assets/data/chart-data.json',
+  '/assets/data/users.json',
   '/manifest.json'
 ];
 

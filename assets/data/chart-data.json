@@ -1,0 +1,62 @@
+{
+  "portfolioHistory": [
+    { "date": "2024-10-26", "btcValue": 1.00000000, "eurValue": 45000.00 },
+    { "date": "2024-10-27", "btcValue": 1.00043333, "eurValue": 45019.50 },
+    { "date": "2024-10-28", "btcValue": 1.00086722, "eurValue": 45039.03 },
+    { "date": "2024-10-29", "btcValue": 1.00130168, "eurValue": 45058.58 },
+    { "date": "2024-10-30", "btcValue": 1.00173671, "eurValue": 45078.15 },
+    { "date": "2024-10-31", "btcValue": 1.00217231, "eurValue": 45097.75 },
+    { "date": "2024-11-01", "btcValue": 1.00260848, "eurValue": 45117.38 },
+    { "date": "2024-11-02", "btcValue": 1.00304523, "eurValue": 45137.04 },
+    { "date": "2024-11-03", "btcValue": 1.00348255, "eurValue": 45156.72 },
+    { "date": "2024-11-04", "btcValue": 1.00392045, "eurValue": 45176.42 },
+    { "date": "2024-11-05", "btcValue": 1.00435892, "eurValue": 45196.15 },
+    { "date": "2024-11-06", "btcValue": 1.00479797, "eurValue": 45215.91 },
+    { "date": "2024-11-07", "btcValue": 1.00523760, "eurValue": 45235.69 },
+    { "date": "2024-11-08", "btcValue": 1.00567781, "eurValue": 45255.50 },
+    { "date": "2024-11-09", "btcValue": 1.00611861, "eurValue": 45275.34 },
+    { "date": "2024-11-10", "btcValue": 1.00655998, "eurValue": 45295.20 },
+    { "date": "2024-11-11", "btcValue": 1.00700194, "eurValue": 45315.09 },
+    { "date": "2024-11-12", "btcValue": 1.00744448, "eurValue": 45335.00 },
+    { "date": "2024-11-13", "btcValue": 1.00788761, "eurValue": 45354.94 },
+    { "date": "2024-11-14", "btcValue": 1.00833133, "eurValue": 45374.91 },
+    { "date": "2024-11-15", "btcValue": 1.00877563, "eurValue": 45394.90 },
+    { "date": "2024-11-16", "btcValue": 1.00922052, "eurValue": 45414.92 },
+    { "date": "2024-11-17", "btcValue": 1.00966600, "eurValue": 45434.97 },
+    { "date": "2024-11-18", "btcValue": 1.01011207, "eurValue": 45455.04 },
+    { "date": "2024-11-19", "btcValue": 1.01055873, "eurValue": 45475.14 },
+    { "date": "2024-11-20", "btcValue": 1.01100599, "eurValue": 45495.27 },
+    { "date": "2024-11-21", "btcValue": 1.01145384, "eurValue": 45515.42 },
+    { "date": "2024-11-22", "btcValue": 1.01190228, "eurValue": 45535.60 },
+    { "date": "2024-11-23", "btcValue": 1.01235132, "eurValue": 45555.81 },
+    { "date": "2024-11-24", "btcValue": 1.01280096, "eurValue": 45576.04 },
+    { "date": "2024-11-25", "btcValue": 1.01325119, "eurValue": 45596.30 }
+  ],
+  "monthlyPerformance": [
+    { "month": "Jun", "return": 1.28 },
+    { "month": "Jul", "return": 1.32 },
+    { "month": "Aug", "return": 1.25 },
+    { "month": "Sep", "return": 1.35 },
+    { "month": "Oct", "return": 1.30 },
+    { "month": "Nov", "return": 1.33 }
+  ],
+  "tradingActivity": [
+    { "day": "Mon", "trades": 12 },
+    { "day": "Tue", "trades": 15 },
+    { "day": "Wed", "trades": 18 },
+    { "day": "Thu", "trades": 14 },
+    { "day": "Fri", "trades": 20 },
+    { "day": "Sat", "trades": 8 },
+    { "day": "Sun", "trades": 6 }
+  ],
+  "summary": {
+    "initialBalance": 1.00000000,
+    "currentBalance": 1.01325119,
+    "totalProfit": 0.01325119,
+    "profitPercentage": 1.33,
+    "totalTrades": 93,
+    "winRate": 62.4,
+    "avgTradeSize": 0.0142,
+    "botUptime": "30d 0h"
+  }
+}
