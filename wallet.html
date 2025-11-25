@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="AnomCAT">
+    <meta name="theme-color" content="#0d0d0f">
+    <meta name="description" content="AnomCAT - My Wallet">
+    
+    <title>Wallet | AnomCAT</title>
+    
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%233b82f6'/%3E%3Ctext x='50' y='65' font-size='50' text-anchor='middle' fill='white'%3EA%3C/text%3E%3C/svg%3E">
+    <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%233b82f6'/%3E%3Ctext x='50' y='65' font-size='50' text-anchor='middle' fill='white'%3EA%3C/text%3E%3C/svg%3E">
+    
+    <link rel="stylesheet" href="assets/css/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="app">
+        <!-- Top Navigation Bar -->
+        <header class="top-bar">
+            <div class="top-bar-left">
+                <a href="home.html" class="logo">
+                    <div class="logo-icon">A</div>
+                    <span>AnomCAT</span>
+                </a>
+            </div>
+            <div class="top-bar-right">
+                <div class="currency-toggle">
+                    <button class="currency-btn active" data-currency="BTC">BTC</button>
+                    <button class="currency-btn" data-currency="EUR">EUR</button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Wallet Overview -->
+            <div class="wallet-overview">
+                <p class="wallet-total-label">Total Balance</p>
+                <h1 class="wallet-total-value" data-wallet="total">0.00000000 BTC</h1>
+                <p class="wallet-secondary-value" data-wallet="secondary">€0.00</p>
+            </div>
+
+            <!-- Quick Actions -->
+            <div class="quick-actions mb-6">
+                <a href="home.html#deposit" class="quick-action">
+                    <div class="quick-action-icon deposit">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 5v14M5 12h14"/>
+                        </svg>
+                    </div>
+                    <span class="quick-action-label">Deposit</span>
+                </a>
+                <a href="#withdraw" class="quick-action">
+                    <div class="quick-action-icon withdraw">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M5 12h14"/>
+                        </svg>
+                    </div>
+                    <span class="quick-action-label">Withdraw</span>
+                </a>
+                <a href="#trade" class="quick-action">
+                    <div class="quick-action-icon trade">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/>
+                            <polyline points="17 6 23 6 23 12"/>
+                        </svg>
+                    </div>
+                    <span class="quick-action-label">Trade</span>
+                </a>
+                <a href="#swap" class="quick-action">
+                    <div class="quick-action-icon swap">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="17 1 21 5 17 9"/>
+                            <path d="M3 11V9a4 4 0 0 1 4-4h14"/>
+                            <polyline points="7 23 3 19 7 15"/>
+                            <path d="M21 13v2a4 4 0 0 1-4 4H3"/>
+                        </svg>
+                    </div>
+                    <span class="quick-action-label">Swap</span>
+                </a>
+            </div>
+
+            <!-- Mini Chart -->
+            <div class="card mb-6">
+                <div class="card-header">
+                    <h3 class="card-title">Portfolio Performance</h3>
+                    <span class="stat-change positive">+1.3%</span>
+                </div>
+                <div class="chart-container" style="height: 160px;">
+                    <canvas id="miniChart"></canvas>
+                </div>
+            </div>
+
+            <!-- Assets -->
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Assets</h3>
+                </div>
+                <div class="asset-list" id="assetList">
+                    <div class="asset-item">
+                        <div class="asset-icon">₿</div>
+                        <div class="asset-info">
+                            <div class="asset-name">Bitcoin</div>
+                            <div class="asset-ticker">BTC</div>
+                        </div>
+                        <div class="asset-balance">
+                            <div class="asset-balance-primary" data-btc-value="0">0.00000000 BTC</div>
+                            <div class="asset-balance-secondary" data-btc-secondary="0">€0.00</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recent Transactions -->
+            <div class="card mt-6">
+                <div class="card-header">
+                    <h3 class="card-title">Recent Activity</h3>
+                    <a href="transactions.html" class="btn btn-outline" style="padding: 8px 16px; font-size: 0.875rem;">View All</a>
+                </div>
+                <div class="transaction-list" id="recentTransactions">
+                    <!-- Will be populated by JS -->
+                </div>
+                <div class="empty-state" id="emptyTransactions">
+                    <div class="empty-state-icon">📋</div>
+                    <h4 class="empty-state-title">No transactions yet</h4>
+                    <p class="empty-state-text">Your recent activity will appear here once you start trading.</p>
+                </div>
+            </div>
+        </main>
+
+        <!-- Bottom Navigation -->
+        <nav class="bottom-nav">
+            <a href="home.html" class="nav-item">
+                <div class="nav-icon">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
+                    </svg>
+                </div>
+                <span class="nav-label">Home</span>
+            </a>
+            <a href="wallet.html" class="nav-item active">
+                <div class="nav-icon">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M21 18v1c0 1.1-.9 2-2 2H5c-1.11 0-2-.9-2-2V5c0-1.1.89-2 2-2h14c1.1 0 2 .9 2 2v1h-9c-1.11 0-2 .9-2 2v8c0 1.1.89 2 2 2h9zm-9-2h10V8H12v8zm4-2.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/>
+                    </svg>
+                </div>
+                <span class="nav-label">Wallet</span>
+            </a>
+            <a href="transactions.html" class="nav-item">
+                <div class="nav-icon">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M4 6h16v2H4zm0 5h16v2H4zm0 5h16v2H4z"/>
+                    </svg>
+                </div>
+                <span class="nav-label">Activity</span>
+            </a>
+            <a href="analytics.html" class="nav-item">
+                <div class="nav-icon">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/>
+                    </svg>
+                </div>
+                <span class="nav-label">Analytics</span>
+            </a>
+            <a href="settings.html" class="nav-item">
+                <div class="nav-icon">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M19.14 12.94c.04-.31.06-.63.06-.94 0-.31-.02-.63-.06-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.04.31-.06.63-.06.94s.02.63.06.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/>
+                    </svg>
+                </div>
+                <span class="nav-label">Settings</span>
+            </a>
+        </nav>
+    </div>
+
+    <script src="assets/js/app.js"></script>
+    <script>
+        // Mini chart
+        let miniChart = null;
+        
+        function initMiniChart() {
+            const ctx = document.getElementById('miniChart').getContext('2d');
+            const chartData = AnomCAT.generateChartData(30);
+            
+            const gradient = ctx.createLinearGradient(0, 0, 0, 150);
+            gradient.addColorStop(0, 'rgba(16, 185, 129, 0.3)');
+            gradient.addColorStop(1, 'rgba(16, 185, 129, 0)');
+            
+            miniChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: chartData.map(d => ''),
+                    datasets: [{
+                        data: chartData.map(d => d.value),
+                        borderColor: '#10b981',
+                        backgroundColor: gradient,
+                        borderWidth: 2,
+                        fill: true,
+                        tension: 0.4,
+                        pointRadius: 0
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: { enabled: false }
+                    },
+                    scales: {
+                        x: { display: false },
+                        y: { display: false }
+                    }
+                }
+            });
+        }
+        
+        // Update asset display
+        function updateAssets() {
+            const btcBalance = AnomCAT.portfolio.btcBalance;
+            
+            // Update asset values
+            document.querySelectorAll('[data-btc-value]').forEach(el => {
+                el.dataset.btcValue = btcBalance;
+                el.textContent = AnomCAT.formatCurrency(btcBalance);
+            });
+            
+            document.querySelectorAll('[data-btc-secondary]').forEach(el => {
+                el.dataset.btcSecondary = btcBalance;
+                el.textContent = AnomCAT.formatSecondaryCurrency(btcBalance);
+            });
+        }
+        
+        // Update recent transactions
+        function updateRecentTransactions() {
+            const container = document.getElementById('recentTransactions');
+            const emptyState = document.getElementById('emptyTransactions');
+            const trades = AnomCAT.portfolio.trades.slice(0, 5);
+            
+            if (trades.length === 0) {
+                container.style.display = 'none';
+                emptyState.style.display = 'flex';
+                return;
+            }
+            
+            container.style.display = 'flex';
+            emptyState.style.display = 'none';
+            
+            container.innerHTML = trades.map(trade => {
+                const isPositive = trade.type === 'deposit' || (trade.type === 'trade' && trade.profit);
+                const icon = trade.type === 'deposit' ? '↓' : (trade.type === 'trade' ? '⚡' : '↑');
+                const iconClass = trade.type === 'deposit' ? 'incoming' : (trade.type === 'trade' ? 'trade' : 'outgoing');
+                const title = trade.type === 'deposit' ? 'Deposit' : (trade.type === 'trade' ? 'Bot Trade' : 'Withdrawal');
+                
+                return `
+                    <div class="transaction-item">
+                        <div class="transaction-icon ${iconClass}">${icon}</div>
+                        <div class="transaction-details">
+                            <div class="transaction-title">${title}</div>
+                            <div class="transaction-meta">${AnomCAT.formatRelativeTime(trade.time)}</div>
+                        </div>
+                        <div class="transaction-amount">
+                            <div class="transaction-amount-primary ${isPositive ? 'amount-positive' : 'amount-negative'}">
+                                ${isPositive ? '+' : '-'}${AnomCAT.formatCurrency(trade.amount)}
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+        
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            initMiniChart();
+            updateAssets();
+            updateRecentTransactions();
+        });
+        
+        // Listen for currency changes
+        window.addEventListener('currencyChanged', function() {
+            updateAssets();
+            updateRecentTransactions();
+            
+            if (miniChart) {
+                const chartData = AnomCAT.generateChartData(30);
+                miniChart.data.datasets[0].data = chartData.map(d => d.value);
+                miniChart.update('none');
+            }
+        });
+    </script>
+</body>
+</html>

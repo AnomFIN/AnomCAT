@@ -1,10 +1,17 @@
 // Service Worker for AnomCAT PWA
-const CACHE_NAME = 'anomcat-v1';
+const CACHE_NAME = 'anomcat-v1.01';
 const urlsToCache = [
   '/',
   '/index.html',
-  '/styles.css',
-  '/app.js',
+  '/login.html',
+  '/register.html',
+  '/home.html',
+  '/wallet.html',
+  '/transactions.html',
+  '/analytics.html',
+  '/settings.html',
+  '/assets/css/style.css',
+  '/assets/js/app.js',
   '/manifest.json'
 ];
 

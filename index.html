@@ -7,139 +7,55 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="AnomCAT">
-    <meta name="theme-color" content="#0a0e27">
-    <meta name="description" content="Crypto daytrading with CAT bot simulation - +1.3%/month">
+    <meta name="theme-color" content="#0d0d0f">
+    <meta name="description" content="AnomCAT - Enterprise Crypto Dashboard">
+    <meta http-equiv="refresh" content="0;url=login.html">
     
-    <title>AnomCAT - Crypto Trading Bot</title>
+    <title>AnomCAT - Enterprise Crypto Dashboard</title>
     
     <link rel="manifest" href="manifest.json">
-    <link rel="icon" type="image/png" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='0.9em' font-size='90'%3E🤖%3C/text%3E%3C/svg%3E">
-    <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='0.9em' font-size='90'%3E🤖%3C/text%3E%3C/svg%3E">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%233b82f6'/%3E%3Ctext x='50' y='65' font-size='50' text-anchor='middle' fill='white'%3EA%3C/text%3E%3C/svg%3E">
+    <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%233b82f6'/%3E%3Ctext x='50' y='65' font-size='50' text-anchor='middle' fill='white'%3EA%3C/text%3E%3C/svg%3E">
     
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <style>
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            background: #0d0d0f;
+        }
+        .loading {
+            text-align: center;
+            color: #a1a1aa;
+        }
+        .loading-icon {
+            width: 64px;
+            height: 64px;
+            background: linear-gradient(135deg, #3b82f6 0%, #6366f1 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            margin: 0 auto 16px;
+            animation: pulse 2s ease-in-out infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.05); opacity: 0.8; }
+        }
+    </style>
 </head>
 <body>
-    <div id="app">
-        <!-- Header -->
-        <header class="header">
-            <div class="header-content">
-                <h1 class="logo">
-                    <span class="logo-icon">🤖</span>
-                    <span class="logo-text">AnomCAT</span>
-                </h1>
-                <div class="header-stats">
-                    <div class="stat">
-                        <span class="stat-label">Bot Status</span>
-                        <span class="stat-value status-active" id="botStatus">ACTIVE</span>
-                    </div>
-                    <div class="stat">
-                        <span class="stat-label">Monthly Return</span>
-                        <span class="stat-value gain">+1.3%</span>
-                    </div>
-                </div>
-            </div>
-        </header>
-
-        <!-- Main Content -->
-        <main class="main">
-            <!-- Portfolio Section -->
-            <section class="section portfolio-section">
-                <div class="section-header">
-                    <h2 class="section-title">Portfolio</h2>
-                    <div class="portfolio-value" id="portfolioValue">0.00000000 BTC</div>
-                </div>
-                
-                <div class="portfolio-chart" id="portfolioChart">
-                    <canvas id="chartCanvas" aria-label="Portfolio growth chart showing Bitcoin value over time" role="img">
-                        Portfolio growth chart showing Bitcoin value over time. The chart visualizes your Bitcoin portfolio's value changes. If you cannot view the chart, please refer to the statistics below.
-                    </canvas>
-                </div>
-                
-                <div class="portfolio-stats">
-                    <div class="portfolio-stat">
-                        <span class="portfolio-stat-label">Initial</span>
-                        <span class="portfolio-stat-value" id="initialValue">0.00000000 BTC</span>
-                    </div>
-                    <div class="portfolio-stat">
-                        <span class="portfolio-stat-label">Profit</span>
-                        <span class="portfolio-stat-value gain" id="profitValue">+0.00000000 BTC</span>
-                    </div>
-                    <div class="portfolio-stat">
-                        <span class="portfolio-stat-label">ROI</span>
-                        <span class="portfolio-stat-value gain" id="roiValue">+0.00%</span>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Deposit Section -->
-            <section class="section deposit-section">
-                <h2 class="section-title">Deposit BTC</h2>
-                <div class="deposit-form">
-                    <div class="input-group">
-                        <input 
-                            type="number" 
-                            id="depositAmount" 
-                            placeholder="0.00000000" 
-                            step="0.00000001"
-                            min="0"
-                            class="input-field"
-                        >
-                        <span class="input-suffix">BTC</span>
-                    </div>
-                    <button class="btn btn-primary" id="depositBtn" aria-label="Deposit Bitcoin and start trading bot">
-                        <span class="btn-text">Deposit & Start Bot</span>
-                    </button>
-                </div>
-                <p class="info-text">⚠️ Demo mode: No real BTC required. Your balance is simulated.</p>
-            </section>
-
-            <!-- Bot Trading Section -->
-            <section class="section trading-section">
-                <h2 class="section-title">CAT Bot Trading</h2>
-                <div class="trading-info">
-                    <div class="trading-stat">
-                        <span class="trading-stat-label">Strategy</span>
-                        <span class="trading-stat-value">Momentum + Mean Reversion</span>
-                    </div>
-                    <div class="trading-stat">
-                        <span class="trading-stat-label">Expected Return</span>
-                        <span class="trading-stat-value gain">+1.3% per month</span>
-                    </div>
-                    <div class="trading-stat">
-                        <span class="trading-stat-label">Trades Today</span>
-                        <span class="trading-stat-value" id="tradesCount">0</span>
-                    </div>
-                    <div class="trading-stat">
-                        <span class="trading-stat-label">Win Rate</span>
-                        <span class="trading-stat-value" id="winRate">--</span>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Mempool & Block Feed -->
-            <section class="section feed-section">
-                <h2 class="section-title">Bitcoin Network Feed</h2>
-                <div class="feed-tabs">
-                    <button class="feed-tab active" data-feed="mempool" role="tab" aria-selected="true">Mempool</button>
-                    <button class="feed-tab" data-feed="blocks" role="tab" aria-selected="false">Blocks</button>
-                </div>
-                <div class="feed-content" id="feedContent">
-                    <div class="feed-item">
-                        <span class="feed-icon">⏳</span>
-                        <span class="feed-text">Loading network data...</span>
-                    </div>
-                </div>
-            </section>
-        </main>
-
-        <!-- Footer -->
-        <footer class="footer">
-            <p class="footer-text">
-                AnomCAT v1.0 | Fully Client-Side | Demo Trading Only
-            </p>
-        </footer>
+    <div class="loading">
+        <div class="loading-icon">A</div>
+        <p>Loading AnomCAT...</p>
     </div>
-
-    <script src="app.js"></script>
+    <script>
+        // Redirect to login page
+        window.location.href = 'login.html';
+    </script>
 </body>
 </html>
