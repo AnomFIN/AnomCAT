@@ -1,7 +1,21 @@
 /**
  * AnomCAT v1.01 - Enterprise Crypto Dashboard
  * Main Application JavaScript
+ * 
+ * Core functionality for the AnomCAT crypto trading bot dashboard.
+ * Handles global state management, currency toggle, portfolio updates,
+ * and shared functionality across all pages.
+ * 
+ * @module AnomCAT
+ * @version 1.01
  */
+
+// ============================================
+// Constants
+// ============================================
+const DAYS_PER_MONTH = 30.436875; // Average days per month (365.2425/12)
+const SATOSHI_THRESHOLD = 0.00000001; // 1 satoshi minimum for updates
+const DEFAULT_BTC_EUR_RATE = 45000; // Default BTC/EUR exchange rate
 
 // ============================================
 // Global State Management
@@ -9,7 +23,7 @@
 const AnomCAT = {
     // Currency state
     currency: 'BTC',
-    btcToEurRate: 45000, // Default BTC/EUR rate
+    btcToEurRate: DEFAULT_BTC_EUR_RATE,
     
     // Portfolio data
     portfolio: {
@@ -317,12 +331,12 @@ AnomCAT.updatePortfolio = function() {
     
     const now = Date.now();
     const elapsed = now - this.bot.lastUpdate;
-    const monthsElapsed = elapsed / (1000 * 60 * 60 * 24 * 30.436875);
+    const monthsElapsed = elapsed / (1000 * 60 * 60 * 24 * DAYS_PER_MONTH);
     
     // Calculate compounded growth
     const growth = this.portfolio.btcBalance * (Math.pow(1 + this.bot.monthlyReturn, monthsElapsed) - 1);
     
-    if (growth > 0.00000001) { // 1 satoshi minimum
+    if (growth > SATOSHI_THRESHOLD) {
         this.portfolio.btcBalance += growth;
         this.portfolio.eurBalance = this.btcToEur(this.portfolio.btcBalance);
         this.bot.lastUpdate = now;
