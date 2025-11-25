@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="AnomCAT">
+    <meta name="theme-color" content="#0d0d0f">
+    <meta name="description" content="AnomCAT - Settings">
+    
+    <title>Settings | AnomCAT</title>
+    
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%233b82f6'/%3E%3Ctext x='50' y='65' font-size='50' text-anchor='middle' fill='white'%3EA%3C/text%3E%3C/svg%3E">
+    <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%233b82f6'/%3E%3Ctext x='50' y='65' font-size='50' text-anchor='middle' fill='white'%3EA%3C/text%3E%3C/svg%3E">
+    
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+    <div class="app">
+        <!-- Top Navigation Bar -->
+        <header class="top-bar">
+            <div class="top-bar-left">
+                <a href="home.html" class="logo">
+                    <div class="logo-icon">A</div>
+                    <span>AnomCAT</span>
+                </a>
+            </div>
+            <div class="top-bar-right">
+                <div class="currency-toggle">
+                    <button class="currency-btn active" data-currency="BTC">BTC</button>
+                    <button class="currency-btn" data-currency="EUR">EUR</button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Page Header -->
+            <div class="page-header">
+                <h1 class="page-title">Settings</h1>
+                <p class="page-subtitle">Manage your preferences</p>
+            </div>
+
+            <!-- Account Section -->
+            <div class="settings-section">
+                <h3 class="settings-section-title">Account</h3>
+                <div class="settings-list">
+                    <div class="settings-item">
+                        <div class="settings-item-left">
+                            <div class="settings-item-icon">👤</div>
+                            <div class="settings-item-content">
+                                <span class="settings-item-title">Profile</span>
+                                <span class="settings-item-subtitle">Edit your account information</span>
+                            </div>
+                        </div>
+                        <div class="settings-item-right">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="9 18 15 12 9 6"/>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="settings-item">
+                        <div class="settings-item-left">
+                            <div class="settings-item-icon">🔒</div>
+                            <div class="settings-item-content">
+                                <span class="settings-item-title">Security</span>
+                                <span class="settings-item-subtitle">Password, 2FA, and security options</span>
+                            </div>
+                        </div>
+                        <div class="settings-item-right">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="9 18 15 12 9 6"/>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="settings-item">
+                        <div class="settings-item-left">
+                            <div class="settings-item-icon">🔗</div>
+                            <div class="settings-item-content">
+                                <span class="settings-item-title">Connected Apps</span>
+                                <span class="settings-item-subtitle">Manage linked services</span>
+                            </div>
+                        </div>
+                        <div class="settings-item-right">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="9 18 15 12 9 6"/>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Preferences Section -->
+            <div class="settings-section">
+                <h3 class="settings-section-title">Preferences</h3>
+                <div class="settings-list">
+                    <div class="settings-item">
+                        <div class="settings-item-left">
+                            <div class="settings-item-icon">💱</div>
+                            <div class="settings-item-content">
+                                <span class="settings-item-title">Default Currency</span>
+                                <span class="settings-item-subtitle" id="currentCurrency">BTC</span>
+                            </div>
+                        </div>
+                        <div class="settings-item-right">
+                            <div class="currency-toggle" style="border: none; background: transparent; padding: 0;">
+                                <button class="currency-btn active" data-currency="BTC" style="padding: 6px 12px;">BTC</button>
+                                <button class="currency-btn" data-currency="EUR" style="padding: 6px 12px;">EUR</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="settings-item">
+                        <div class="settings-item-left">
+                            <div class="settings-item-icon">🔔</div>
+                            <div class="settings-item-content">
+                                <span class="settings-item-title">Notifications</span>
+                                <span class="settings-item-subtitle">Push notifications for trades</span>
+                            </div>
+                        </div>
+                        <div class="settings-item-right">
+                            <label class="toggle">
+                                <input type="checkbox" checked>
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="settings-item">
+                        <div class="settings-item-left">
+                            <div class="settings-item-icon">📧</div>
+                            <div class="settings-item-content">
+                                <span class="settings-item-title">Email Alerts</span>
+                                <span class="settings-item-subtitle">Daily portfolio summary</span>
+                            </div>
+                        </div>
+                        <div class="settings-item-right">
+                            <label class="toggle">
+                                <input type="checkbox">
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bot Settings Section -->
+            <div class="settings-section">
+                <h3 class="settings-section-title">Bot Settings</h3>
+                <div class="settings-list">
+                    <div class="settings-item">
+                        <div class="settings-item-left">
+                            <div class="settings-item-icon">🤖</div>
+                            <div class="settings-item-content">
+                                <span class="settings-item-title">Auto Trading</span>
+                                <span class="settings-item-subtitle">Enable CAT bot automated trading</span>
+                            </div>
+                        </div>
+                        <div class="settings-item-right">
+                            <label class="toggle">
+                                <input type="checkbox" id="autoTrading" checked>
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="settings-item">
+                        <div class="settings-item-left">
+                            <div class="settings-item-icon">📊</div>
+                            <div class="settings-item-content">
+                                <span class="settings-item-title">Risk Level</span>
+                                <span class="settings-item-subtitle">Conservative (1.3% target)</span>
+                            </div>
+                        </div>
+                        <div class="settings-item-right">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="9 18 15 12 9 6"/>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="settings-item">
+                        <div class="settings-item-left">
+                            <div class="settings-item-icon">⚡</div>
+                            <div class="settings-item-content">
+                                <span class="settings-item-title">Trading Strategy</span>
+                                <span class="settings-item-subtitle">Momentum + Mean Reversion</span>
+                            </div>
+                        </div>
+                        <div class="settings-item-right">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="9 18 15 12 9 6"/>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Support Section -->
+            <div class="settings-section">
+                <h3 class="settings-section-title">Support</h3>
+                <div class="settings-list">
+                    <div class="settings-item">
+                        <div class="settings-item-left">
+                            <div class="settings-item-icon">❓</div>
+                            <div class="settings-item-content">
+                                <span class="settings-item-title">Help Center</span>
+                                <span class="settings-item-subtitle">FAQ and guides</span>
+                            </div>
+                        </div>
+                        <div class="settings-item-right">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="9 18 15 12 9 6"/>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="settings-item">
+                        <div class="settings-item-left">
+                            <div class="settings-item-icon">💬</div>
+                            <div class="settings-item-content">
+                                <span class="settings-item-title">Contact Support</span>
+                                <span class="settings-item-subtitle">Get help from our team</span>
+                            </div>
+                        </div>
+                        <div class="settings-item-right">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="9 18 15 12 9 6"/>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="settings-item">
+                        <div class="settings-item-left">
+                            <div class="settings-item-icon">📝</div>
+                            <div class="settings-item-content">
+                                <span class="settings-item-title">Terms of Service</span>
+                                <span class="settings-item-subtitle">Legal information</span>
+                            </div>
+                        </div>
+                        <div class="settings-item-right">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="9 18 15 12 9 6"/>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Danger Zone -->
+            <div class="settings-section">
+                <h3 class="settings-section-title">Data</h3>
+                <div class="settings-list">
+                    <div class="settings-item" id="resetData" style="cursor: pointer;">
+                        <div class="settings-item-left">
+                            <div class="settings-item-icon" style="background: rgba(239, 68, 68, 0.15); color: #ef4444;">🗑️</div>
+                            <div class="settings-item-content">
+                                <span class="settings-item-title" style="color: #ef4444;">Reset All Data</span>
+                                <span class="settings-item-subtitle">Clear portfolio and trading history</span>
+                            </div>
+                        </div>
+                        <div class="settings-item-right">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="9 18 15 12 9 6"/>
+                            </svg>
+                        </div>
+                    </div>
+                    <a href="login.html" class="settings-item" style="text-decoration: none; color: inherit;">
+                        <div class="settings-item-left">
+                            <div class="settings-item-icon" style="background: rgba(239, 68, 68, 0.15); color: #ef4444;">🚪</div>
+                            <div class="settings-item-content">
+                                <span class="settings-item-title" style="color: #ef4444;">Sign Out</span>
+                                <span class="settings-item-subtitle">Log out of your account</span>
+                            </div>
+                        </div>
+                        <div class="settings-item-right">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="9 18 15 12 9 6"/>
+                            </svg>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Version Info -->
+            <div class="text-center mt-8 mb-4">
+                <p class="text-tertiary" style="font-size: 0.75rem;">AnomCAT v1.01 • Demo Mode</p>
+                <p class="text-tertiary" style="font-size: 0.75rem;">Fully Client-Side • No Backend Required</p>
+            </div>
+        </main>
+
+        <!-- Bottom Navigation -->
+        <nav class="bottom-nav">
+            <a href="home.html" class="nav-item">
+                <div class="nav-icon">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
+                    </svg>
+                </div>
+                <span class="nav-label">Home</span>
+            </a>
+            <a href="wallet.html" class="nav-item">
+                <div class="nav-icon">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M21 18v1c0 1.1-.9 2-2 2H5c-1.11 0-2-.9-2-2V5c0-1.1.89-2 2-2h14c1.1 0 2 .9 2 2v1h-9c-1.11 0-2 .9-2 2v8c0 1.1.89 2 2 2h9zm-9-2h10V8H12v8zm4-2.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/>
+                    </svg>
+                </div>
+                <span class="nav-label">Wallet</span>
+            </a>
+            <a href="transactions.html" class="nav-item">
+                <div class="nav-icon">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M4 6h16v2H4zm0 5h16v2H4zm0 5h16v2H4z"/>
+                    </svg>
+                </div>
+                <span class="nav-label">Activity</span>
+            </a>
+            <a href="analytics.html" class="nav-item">
+                <div class="nav-icon">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/>
+                    </svg>
+                </div>
+                <span class="nav-label">Analytics</span>
+            </a>
+            <a href="settings.html" class="nav-item active">
+                <div class="nav-icon">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M19.14 12.94c.04-.31.06-.63.06-.94 0-.31-.02-.63-.06-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.04.31-.06.63-.06.94s.02.63.06.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/>
+                    </svg>
+                </div>
+                <span class="nav-label">Settings</span>
+            </a>
+        </nav>
+    </div>
+
+    <script src="assets/js/app.js"></script>
+    <script>
+        // Update current currency display
+        function updateCurrencyDisplay() {
+            document.getElementById('currentCurrency').textContent = AnomCAT.currency;
+        }
+        
+        // Reset data
+        document.getElementById('resetData').addEventListener('click', function() {
+            if (confirm('Are you sure you want to reset all data? This action cannot be undone.')) {
+                AnomCAT.clearStorage();
+                alert('All data has been reset.');
+                window.location.reload();
+            }
+        });
+        
+        // Auto trading toggle
+        document.getElementById('autoTrading').addEventListener('change', function() {
+            AnomCAT.bot.active = this.checked;
+            AnomCAT.saveToStorage();
+        });
+        
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            updateCurrencyDisplay();
+            document.getElementById('autoTrading').checked = AnomCAT.bot.active;
+        });
+        
+        // Listen for currency changes
+        window.addEventListener('currencyChanged', updateCurrencyDisplay);
+    </script>
+</body>
+</html>

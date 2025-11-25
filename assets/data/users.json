@@ -1,0 +1,32 @@
+{
+  "users": [
+    {
+      "id": "usr_001",
+      "email": "demo@anomcat.io",
+      "name": "Demo User",
+      "avatar": null,
+      "createdAt": "2024-10-26T00:00:00Z",
+      "preferences": {
+        "currency": "BTC",
+        "notifications": true,
+        "emailAlerts": false
+      }
+    },
+    {
+      "id": "usr_002",
+      "email": "trader@anomcat.io",
+      "name": "Pro Trader",
+      "avatar": null,
+      "createdAt": "2024-09-15T00:00:00Z",
+      "preferences": {
+        "currency": "EUR",
+        "notifications": true,
+        "emailAlerts": true
+      }
+    }
+  ],
+  "demoCredentials": {
+    "email": "demo@anomcat.io",
+    "hint": "Any password works in demo mode"
+  }
+}
