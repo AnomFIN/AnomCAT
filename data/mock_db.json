@@ -5,7 +5,10 @@
     "email": "demo@anomcat.fi",
     "avatar": null,
     "initials": "DU",
-    "createdAt": "2024-01-01T00:00:00Z"
+    "createdAt": "2024-01-01T00:00:00Z",
+    "referralCode": "ANOM7X3K9",
+    "referralLink": "https://anomcat.coin/?ref=ANOM7X3K9",
+    "referredBy": null
   },
   "settings": {
     "language": "fi",
@@ -113,5 +116,122 @@
     "low": 0.001,
     "medium": 0.005,
     "high": 0.01
+  },
+  "referralProgram": {
+    "userReferralCode": "ANOM7X3K9",
+    "userReferralLink": "https://anomcat.coin/?ref=ANOM7X3K9",
+    "totalReferrals": 5,
+    "activeReferrals": 3,
+    "totalEarnings": 0.00125,
+    "pendingEarnings": 0.00015,
+    "bonusStructure": {
+      "signupBonus": 0.0001,
+      "tradingBonus": 0.0005,
+      "depositBonus": 0.001,
+      "tierMultipliers": {
+        "bronze": 1.0,
+        "silver": 1.25,
+        "gold": 1.5,
+        "platinum": 2.0
+      }
+    },
+    "currentTier": "silver",
+    "referrals": [
+      {
+        "id": "ref_001",
+        "referredUserId": "user_002",
+        "referredUsername": "satoshi_fan",
+        "status": "active",
+        "joinedAt": "2024-01-10T14:30:00Z",
+        "totalTraded": 1.5,
+        "bonusEarned": 0.00035
+      },
+      {
+        "id": "ref_002",
+        "referredUserId": "user_003",
+        "referredUsername": "crypto_trader",
+        "status": "active",
+        "joinedAt": "2024-01-15T09:00:00Z",
+        "totalTraded": 2.1,
+        "bonusEarned": 0.00045
+      },
+      {
+        "id": "ref_003",
+        "referredUserId": "user_004",
+        "referredUsername": "btc_hodler",
+        "status": "active",
+        "joinedAt": "2024-01-20T16:45:00Z",
+        "totalTraded": 0.8,
+        "bonusEarned": 0.00025
+      },
+      {
+        "id": "ref_004",
+        "referredUserId": "user_005",
+        "referredUsername": "newbie_trader",
+        "status": "pending",
+        "joinedAt": "2024-01-25T11:20:00Z",
+        "totalTraded": 0,
+        "bonusEarned": 0
+      },
+      {
+        "id": "ref_005",
+        "referredUserId": "user_006",
+        "referredUsername": "early_adopter",
+        "status": "inactive",
+        "joinedAt": "2024-01-05T08:00:00Z",
+        "totalTraded": 0.3,
+        "bonusEarned": 0.0002
+      }
+    ],
+    "bonusHistory": [
+      {
+        "id": "bonus_001",
+        "type": "signup",
+        "amount": 0.0001,
+        "referralId": "ref_001",
+        "timestamp": "2024-01-10T14:30:00Z",
+        "description": "Rekisteröitymisbonus: satoshi_fan"
+      },
+      {
+        "id": "bonus_002",
+        "type": "trading",
+        "amount": 0.00025,
+        "referralId": "ref_001",
+        "timestamp": "2024-01-12T10:00:00Z",
+        "description": "Kaupankäyntibonus: satoshi_fan"
+      },
+      {
+        "id": "bonus_003",
+        "type": "signup",
+        "amount": 0.0001,
+        "referralId": "ref_002",
+        "timestamp": "2024-01-15T09:00:00Z",
+        "description": "Rekisteröitymisbonus: crypto_trader"
+      },
+      {
+        "id": "bonus_004",
+        "type": "trading",
+        "amount": 0.00035,
+        "referralId": "ref_002",
+        "timestamp": "2024-01-18T15:30:00Z",
+        "description": "Kaupankäyntibonus: crypto_trader"
+      },
+      {
+        "id": "bonus_005",
+        "type": "signup",
+        "amount": 0.0001,
+        "referralId": "ref_003",
+        "timestamp": "2024-01-20T16:45:00Z",
+        "description": "Rekisteröitymisbonus: btc_hodler"
+      },
+      {
+        "id": "bonus_006",
+        "type": "trading",
+        "amount": 0.00015,
+        "referralId": "ref_003",
+        "timestamp": "2024-01-22T12:00:00Z",
+        "description": "Kaupankäyntibonus: btc_hodler"
+      }
+    ]
   }
 }
