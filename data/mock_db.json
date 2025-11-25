@@ -1,0 +1,117 @@
+{
+  "user": {
+    "id": "user_001",
+    "username": "demo_user",
+    "email": "demo@anomcat.fi",
+    "avatar": null,
+    "initials": "DU",
+    "createdAt": "2024-01-01T00:00:00Z"
+  },
+  "settings": {
+    "language": "fi",
+    "theme": "dark",
+    "simulateNetworkDelay": false,
+    "autoTradeEnabled": true,
+    "slippagePreset": "medium",
+    "notificationsEnabled": true,
+    "onboardingCompleted": false
+  },
+  "portfolio": {
+    "initial": 0.5,
+    "current": 0.5065,
+    "history": []
+  },
+  "catAccount": {
+    "balance": 0.1,
+    "autoTradeEnabled": true,
+    "rebalancingEnabled": true,
+    "feePercentage": 0.001,
+    "history": []
+  },
+  "wallets": {
+    "main": {
+      "balance": 0.5065,
+      "address": "bc1qxy2kgdygjrsqtzq2n0yrf2493p83kkfjhx0wlh"
+    },
+    "cat": {
+      "balance": 0.1,
+      "address": "bc1qcat0000000000000000000000000000000cat"
+    }
+  },
+  "transactions": [
+    {
+      "id": "tx_001",
+      "type": "deposit",
+      "amount": 0.5,
+      "fee": 0,
+      "timestamp": "2024-01-01T10:00:00Z",
+      "status": "completed",
+      "automatedByCat": false,
+      "description": "Alkutalletus"
+    },
+    {
+      "id": "tx_002",
+      "type": "trade",
+      "amount": 0.05,
+      "fee": 0.00005,
+      "timestamp": "2024-01-02T14:30:00Z",
+      "status": "completed",
+      "automatedByCat": true,
+      "description": "Automaattinen rebalansointi C-A-T:n toimesta"
+    },
+    {
+      "id": "tx_003",
+      "type": "trade",
+      "amount": 0.02,
+      "fee": 0.00002,
+      "timestamp": "2024-01-03T09:15:00Z",
+      "status": "completed",
+      "automatedByCat": true,
+      "description": "Momentum-strategia: Osto"
+    }
+  ],
+  "catActivity": [
+    {
+      "id": "cat_001",
+      "action": "rebalance",
+      "amount": 0.05,
+      "timestamp": "2024-01-02T14:30:00Z",
+      "description": "Automaattinen rebalansointi"
+    },
+    {
+      "id": "cat_002",
+      "action": "trade",
+      "amount": 0.02,
+      "timestamp": "2024-01-03T09:15:00Z",
+      "description": "Momentum-strategia toteutettu"
+    }
+  ],
+  "notifications": [
+    {
+      "id": "notif_001",
+      "type": "success",
+      "title": "Talletus onnistui",
+      "message": "0.5 BTC talletettu onnistuneesti",
+      "timestamp": "2024-01-01T10:00:00Z",
+      "read": true
+    },
+    {
+      "id": "notif_002",
+      "type": "info",
+      "title": "C-A-T aktivoitu",
+      "message": "Automaattinen kaupankäynti käynnistetty",
+      "timestamp": "2024-01-01T10:01:00Z",
+      "read": true
+    }
+  ],
+  "marketPrices": {
+    "BTC_USD": 45000,
+    "BTC_EUR": 41500,
+    "lastUpdated": "2024-01-15T12:00:00Z"
+  },
+  "slippagePresets": {
+    "low": 0.001,
+    "medium": 0.005,
+    "high": 0.01
+  }
+}
