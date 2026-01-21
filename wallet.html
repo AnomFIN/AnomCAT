@@ -17,6 +17,8 @@
     <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%233b82f6'/%3E%3Ctext x='50' y='65' font-size='50' text-anchor='middle' fill='white'%3EA%3C/text%3E%3C/svg%3E">
     
     <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/cat.css">
+    <link rel="stylesheet" href="assets/css/modals.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
@@ -41,39 +43,40 @@
         <main class="main-content">
             <!-- Wallet Overview -->
             <div class="wallet-overview">
-                <p class="wallet-total-label">Total Balance</p>
+                <p class="wallet-total-label" data-i18n="portfolio.totalBalance">Kokonaissaldo</p>
                 <h1 class="wallet-total-value" data-wallet="total">0.00000000 BTC</h1>
                 <p class="wallet-secondary-value" data-wallet="secondary">€0.00</p>
             </div>
 
             <!-- Quick Actions -->
             <div class="quick-actions mb-6">
-                <a href="home.html#deposit" class="quick-action">
+                <a href="#cat-funds" class="quick-action cat-action" id="catFundsActionWallet">
+                    <div class="quick-action-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"/>
+                            <path d="M16 8h-6a2 2 0 100 4h4a2 2 0 110 4H8"/>
+                            <path d="M12 18V6"/>
+                        </svg>
+                    </div>
+                    <span class="quick-action-label" data-i18n="cat.showAvailable">Näytä C-A-T</span>
+                </a>
+                <a href="#receive" class="quick-action" id="receiveActionWallet">
                     <div class="quick-action-icon deposit">
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <path d="M12 5v14M5 12h14"/>
                         </svg>
                     </div>
-                    <span class="quick-action-label">Deposit</span>
+                    <span class="quick-action-label" data-i18n="actions.receive">Vastaanota</span>
                 </a>
-                <a href="#withdraw" class="quick-action">
+                <a href="#send" class="quick-action" id="sendActionWallet">
                     <div class="quick-action-icon withdraw">
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <path d="M5 12h14"/>
                         </svg>
                     </div>
-                    <span class="quick-action-label">Withdraw</span>
+                    <span class="quick-action-label" data-i18n="actions.send">Lähetä</span>
                 </a>
-                <a href="#trade" class="quick-action">
-                    <div class="quick-action-icon trade">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/>
-                            <polyline points="17 6 23 6 23 12"/>
-                        </svg>
-                    </div>
-                    <span class="quick-action-label">Trade</span>
-                </a>
-                <a href="#swap" class="quick-action">
+                <a href="#swap" class="quick-action" id="swapActionWallet">
                     <div class="quick-action-icon swap">
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <polyline points="17 1 21 5 17 9"/>
@@ -82,7 +85,7 @@
                             <path d="M21 13v2a4 4 0 0 1-4 4H3"/>
                         </svg>
                     </div>
-                    <span class="quick-action-label">Swap</span>
+                    <span class="quick-action-label" data-i18n="actions.swap">Vaihda</span>
                 </a>
             </div>
 
@@ -281,6 +284,35 @@
             updateAssets();
             updateRecentTransactions();
         });
+        
+        // Quick action handlers
+        if (document.getElementById('catFundsActionWallet')) {
+            document.getElementById('catFundsActionWallet').addEventListener('click', function(e) {
+                e.preventDefault();
+                AnomModals.showSendModal();
+            });
+        }
+        
+        if (document.getElementById('receiveActionWallet')) {
+            document.getElementById('receiveActionWallet').addEventListener('click', function(e) {
+                e.preventDefault();
+                AnomModals.showReceiveModal();
+            });
+        }
+        
+        if (document.getElementById('sendActionWallet')) {
+            document.getElementById('sendActionWallet').addEventListener('click', function(e) {
+                e.preventDefault();
+                AnomModals.showSendModal();
+            });
+        }
+        
+        if (document.getElementById('swapActionWallet')) {
+            document.getElementById('swapActionWallet').addEventListener('click', function(e) {
+                e.preventDefault();
+                AnomModals.showSwapModal();
+            });
+        }
         
         // Listen for currency changes
         window.addEventListener('currencyChanged', function() {

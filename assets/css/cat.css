@@ -1,0 +1,341 @@
+/* C-A-T Specific Styling */
+/* Special styling for Cat account features and visual emphasis */
+
+/* CAT Badge */
+.cat-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 12px;
+    background: linear-gradient(135deg, #3b82f6 0%, #6366f1 100%);
+    border-radius: var(--radius-full);
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-semibold);
+    color: #ffffff;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    box-shadow: 0 0 20px rgba(59, 130, 246, 0.4);
+    animation: cat-glow 2s ease-in-out infinite;
+}
+
+@keyframes cat-glow {
+    0%, 100% {
+        box-shadow: 0 0 20px rgba(59, 130, 246, 0.4);
+    }
+    50% {
+        box-shadow: 0 0 30px rgba(59, 130, 246, 0.6);
+    }
+}
+
+/* CAT Icon */
+.cat-icon {
+    width: 16px;
+    height: 16px;
+    background: linear-gradient(135deg, #3b82f6 0%, #6366f1 100%);
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    font-weight: bold;
+    color: white;
+}
+
+/* CAT Card */
+.cat-card {
+    background: var(--bg-card);
+    border: 2px solid rgba(59, 130, 246, 0.3);
+    border-radius: var(--radius-lg);
+    padding: var(--space-6);
+    position: relative;
+    overflow: hidden;
+}
+
+.cat-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, #3b82f6 0%, #6366f1 50%, #3b82f6 100%);
+    background-size: 200% 100%;
+    animation: cat-card-shine 3s linear infinite;
+}
+
+@keyframes cat-card-shine {
+    0% {
+        background-position: 0% 0%;
+    }
+    100% {
+        background-position: 200% 0%;
+    }
+}
+
+.cat-card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: var(--space-4);
+}
+
+.cat-card-title {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-semibold);
+    color: var(--text-primary);
+}
+
+/* CAT Balance Display */
+.cat-balance {
+    font-size: var(--font-size-3xl);
+    font-weight: var(--font-weight-bold);
+    color: var(--accent-primary);
+    font-family: var(--font-mono);
+    text-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
+}
+
+.cat-balance-label {
+    font-size: var(--font-size-sm);
+    color: var(--text-secondary);
+    margin-bottom: var(--space-2);
+}
+
+/* CAT Action Button */
+.cat-action-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    padding: var(--space-3) var(--space-6);
+    background: linear-gradient(135deg, #3b82f6 0%, #6366f1 100%);
+    border: none;
+    border-radius: var(--radius-md);
+    color: #ffffff;
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-medium);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
+}
+
+.cat-action-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0 30px rgba(59, 130, 246, 0.5);
+}
+
+.cat-action-btn:active {
+    transform: translateY(0);
+}
+
+/* CAT Transaction Label */
+.transaction-cat-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 2px 8px;
+    background: rgba(59, 130, 246, 0.1);
+    border: 1px solid rgba(59, 130, 246, 0.3);
+    border-radius: var(--radius-sm);
+    font-size: var(--font-size-xs);
+    color: var(--accent-primary);
+    font-weight: var(--font-weight-medium);
+}
+
+/* CAT Status Indicator */
+.cat-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: var(--font-size-sm);
+    color: var(--text-secondary);
+}
+
+.cat-status-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--accent-success);
+    box-shadow: 0 0 10px rgba(16, 185, 129, 0.6);
+    animation: cat-pulse 2s ease-in-out infinite;
+}
+
+@keyframes cat-pulse {
+    0%, 100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 0.7;
+        transform: scale(1.2);
+    }
+}
+
+.cat-status.idle .cat-status-dot {
+    background: var(--text-muted);
+    box-shadow: none;
+    animation: none;
+}
+
+/* CAT Auto Trade Toggle */
+.cat-toggle {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    padding: var(--space-4);
+    background: var(--bg-tertiary);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: background var(--transition-fast);
+}
+
+.cat-toggle:hover {
+    background: var(--bg-elevated);
+}
+
+.cat-toggle-switch {
+    width: 44px;
+    height: 24px;
+    background: var(--border-secondary);
+    border-radius: var(--radius-full);
+    position: relative;
+    transition: background var(--transition-fast);
+}
+
+.cat-toggle-switch.active {
+    background: var(--accent-primary);
+}
+
+.cat-toggle-switch::after {
+    content: '';
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 20px;
+    height: 20px;
+    background: white;
+    border-radius: 50%;
+    transition: transform var(--transition-fast);
+}
+
+.cat-toggle-switch.active::after {
+    transform: translateX(20px);
+}
+
+.cat-toggle-label {
+    flex: 1;
+    font-size: var(--font-size-sm);
+    color: var(--text-primary);
+}
+
+.cat-toggle-description {
+    font-size: var(--font-size-xs);
+    color: var(--text-secondary);
+    margin-top: 2px;
+}
+
+/* CAT Quick Action in Quick Actions Grid */
+.quick-action.cat-action .quick-action-icon {
+    background: linear-gradient(135deg, #3b82f6 0%, #6366f1 100%);
+    box-shadow: 0 0 20px rgba(59, 130, 246, 0.4);
+}
+
+/* CAT Available Funds Modal */
+.cat-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(13, 13, 15, 0.9);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity var(--transition-normal);
+    backdrop-filter: blur(8px);
+}
+
+.cat-modal.show {
+    opacity: 1;
+    pointer-events: all;
+}
+
+.cat-modal-content {
+    background: var(--bg-card);
+    border: 2px solid rgba(59, 130, 246, 0.3);
+    border-radius: var(--radius-xl);
+    padding: var(--space-8);
+    max-width: 480px;
+    width: 90%;
+    max-height: 80vh;
+    overflow-y: auto;
+    transform: scale(0.9);
+    transition: transform var(--transition-normal);
+}
+
+.cat-modal.show .cat-modal-content {
+    transform: scale(1);
+}
+
+.cat-modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: var(--space-6);
+}
+
+.cat-modal-title {
+    font-size: var(--font-size-2xl);
+    font-weight: var(--font-weight-bold);
+    color: var(--text-primary);
+}
+
+.cat-modal-close {
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--bg-tertiary);
+    border: none;
+    border-radius: var(--radius-md);
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.cat-modal-close:hover {
+    background: var(--bg-elevated);
+    color: var(--text-primary);
+}
+
+/* CAT Stats Grid */
+.cat-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-4);
+    margin: var(--space-6) 0;
+}
+
+.cat-stat-item {
+    background: var(--bg-tertiary);
+    padding: var(--space-4);
+    border-radius: var(--radius-md);
+}
+
+.cat-stat-label {
+    font-size: var(--font-size-xs);
+    color: var(--text-secondary);
+    margin-bottom: var(--space-2);
+}
+
+.cat-stat-value {
+    font-size: var(--font-size-xl);
+    font-weight: var(--font-weight-bold);
+    color: var(--accent-primary);
+    font-family: var(--font-mono);
+}

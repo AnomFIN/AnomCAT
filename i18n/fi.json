@@ -1,0 +1,141 @@
+{
+  "app": {
+    "name": "AnomCAT",
+    "tagline": "Yritystason krypto-dashboard"
+  },
+  "login": {
+    "title": "Kirjaudu Dodi-demo-tilaan",
+    "subtitle": "Kirjaudu sisään päästäksesi salkkuusi",
+    "email": "Sähköposti",
+    "password": "Salasana",
+    "signin": "Kirjaudu sisään",
+    "continueDemo": "Jatka demo-tilaan",
+    "orContinueWith": "tai jatka",
+    "continueWithGoogle": "Jatka Googlella",
+    "continueWithApple": "Jatka Applella",
+    "noAccount": "Eikö sinulla ole tiliä?",
+    "signUp": "Rekisteröidy"
+  },
+  "portfolio": {
+    "totalValue": "Kokonaisarvo (demo)",
+    "totalBalance": "Kokonaissaldo",
+    "btcPrice": "BTC-kurssi (demo)",
+    "priceUpdated": "Kurssi päivitetty demosta",
+    "performance": "Salkun kehitys (demo)",
+    "initial": "Alkuperäinen",
+    "profit": "Voitto",
+    "roi": "ROI",
+    "monthlyReturn": "Kuukausituotto"
+  },
+  "cat": {
+    "name": "C-A-T",
+    "fullName": "C-A-T (automaattitreidi)",
+    "badge": "CAT",
+    "autoTrade": "Automaattinen kaupankäynti",
+    "showAvailable": "Näytä C-A-T:n käytettävissä olevat varat",
+    "available": "Käytettävissä",
+    "balance": "Saldo",
+    "enableAutoTrade": "Aseta automaattitreidi päälle",
+    "disableAutoTrade": "Aseta automaattitreidi pois",
+    "transferToMain": "Siirrä Cat → Päätili",
+    "trading": "CAT Bot Kaupankäynti",
+    "status": "Tila",
+    "active": "Aktiivinen",
+    "idle": "Pois päältä"
+  },
+  "actions": {
+    "deposit": "Talleta",
+    "receive": "Vastaanota",
+    "send": "Lähetä",
+    "swap": "Vaihda",
+    "buy": "Osta",
+    "trade": "Kauppaa",
+    "withdraw": "Nosta",
+    "confirm": "Vahvista",
+    "cancel": "Peruuta",
+    "close": "Sulje"
+  },
+  "modals": {
+    "send": {
+      "title": "Lähetä BTC",
+      "from": "Lähettäjä",
+      "to": "Vastaanottaja",
+      "amount": "Määrä",
+      "confirm": "Vahvista lähetys",
+      "success": "Lähetys onnistui!"
+    },
+    "receive": {
+      "title": "Vastaanota BTC",
+      "address": "Vastaanotto-osoite",
+      "copy": "Kopioi osoite",
+      "qr": "QR-koodi"
+    },
+    "swap": {
+      "title": "Vaihda tokenit",
+      "from": "Vaihda",
+      "to": "Vastaanota",
+      "confirm": "Suorita swap (demo)",
+      "success": "Vaihto onnistui!"
+    },
+    "buy": {
+      "title": "Osta BTC",
+      "amount": "Määrä",
+      "payment": "Maksutapa",
+      "confirm": "Vahvista osto",
+      "success": "Osto onnistui!"
+    }
+  },
+  "transactions": {
+    "title": "Tapahtumat",
+    "recent": "Viimeisimmät tapahtumat",
+    "type": "Tyyppi",
+    "amount": "Määrä",
+    "timestamp": "Aika",
+    "status": "Tila",
+    "filter": {
+      "all": "Kaikki",
+      "cat": "Vain CAT",
+      "main": "Vain päätili"
+    }
+  },
+  "wallet": {
+    "title": "Lompakko",
+    "accounts": "Tilit",
+    "assets": "Omaisuus",
+    "quickActions": "Pikatoiminnot"
+  },
+  "settings": {
+    "title": "Asetukset",
+    "theme": "Teema",
+    "language": "Kieli",
+    "dark": "Tumma",
+    "light": "Valoisa",
+    "system": "Järjestelmä",
+    "exportData": "Vie demo-data",
+    "importData": "Tuo demo-data"
+  },
+  "session": {
+    "id": "Istunto",
+    "demo": "DEMO"
+  },
+  "notifications": {
+    "catTrade": "CAT suoritti trade → +0.8%",
+    "depositSuccess": "Talletus onnistui",
+    "sendSuccess": "Lähetys onnistui",
+    "swapSuccess": "Vaihto onnistui",
+    "error": "Virhe tapahtui"
+  },
+  "validation": {
+    "insufficientFunds": "Varat eivät riitä",
+    "invalidAmount": "Virheellinen määrä",
+    "required": "Pakollinen kenttä"
+  },
+  "common": {
+    "loading": "Ladataan...",
+    "save": "Tallenna",
+    "cancel": "Peruuta",
+    "ok": "OK",
+    "yes": "Kyllä",
+    "no": "Ei"
+  }
+}

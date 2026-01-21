@@ -1,0 +1,141 @@
+{
+  "app": {
+    "name": "AnomCAT",
+    "tagline": "Enterprise Crypto Dashboard"
+  },
+  "login": {
+    "title": "Welcome back",
+    "subtitle": "Sign in to access your portfolio",
+    "email": "Email",
+    "password": "Password",
+    "signin": "Sign In",
+    "continueDemo": "Continue to Demo",
+    "orContinueWith": "or continue with",
+    "continueWithGoogle": "Continue with Google",
+    "continueWithApple": "Continue with Apple",
+    "noAccount": "Don't have an account?",
+    "signUp": "Sign up"
+  },
+  "portfolio": {
+    "totalValue": "Total Value (demo)",
+    "totalBalance": "Total Balance",
+    "btcPrice": "BTC Price (demo)",
+    "priceUpdated": "Price updated from demo",
+    "performance": "Portfolio Performance (demo)",
+    "initial": "Initial",
+    "profit": "Profit",
+    "roi": "ROI",
+    "monthlyReturn": "Monthly Return"
+  },
+  "cat": {
+    "name": "C-A-T",
+    "fullName": "C-A-T (automated trading)",
+    "badge": "CAT",
+    "autoTrade": "Automated Trading",
+    "showAvailable": "Show C-A-T Available Funds",
+    "available": "Available",
+    "balance": "Balance",
+    "enableAutoTrade": "Enable Auto Trade",
+    "disableAutoTrade": "Disable Auto Trade",
+    "transferToMain": "Transfer Cat → Main",
+    "trading": "CAT Bot Trading",
+    "status": "Status",
+    "active": "Active",
+    "idle": "Idle"
+  },
+  "actions": {
+    "deposit": "Deposit",
+    "receive": "Receive",
+    "send": "Send",
+    "swap": "Swap",
+    "buy": "Buy",
+    "trade": "Trade",
+    "withdraw": "Withdraw",
+    "confirm": "Confirm",
+    "cancel": "Cancel",
+    "close": "Close"
+  },
+  "modals": {
+    "send": {
+      "title": "Send BTC",
+      "from": "From",
+      "to": "To",
+      "amount": "Amount",
+      "confirm": "Confirm Send",
+      "success": "Send successful!"
+    },
+    "receive": {
+      "title": "Receive BTC",
+      "address": "Receive Address",
+      "copy": "Copy Address",
+      "qr": "QR Code"
+    },
+    "swap": {
+      "title": "Swap Tokens",
+      "from": "From",
+      "to": "To",
+      "confirm": "Execute Swap (demo)",
+      "success": "Swap successful!"
+    },
+    "buy": {
+      "title": "Buy BTC",
+      "amount": "Amount",
+      "payment": "Payment Method",
+      "confirm": "Confirm Purchase",
+      "success": "Purchase successful!"
+    }
+  },
+  "transactions": {
+    "title": "Transactions",
+    "recent": "Recent Transactions",
+    "type": "Type",
+    "amount": "Amount",
+    "timestamp": "Time",
+    "status": "Status",
+    "filter": {
+      "all": "All",
+      "cat": "CAT Only",
+      "main": "Main Only"
+    }
+  },
+  "wallet": {
+    "title": "Wallet",
+    "accounts": "Accounts",
+    "assets": "Assets",
+    "quickActions": "Quick Actions"
+  },
+  "settings": {
+    "title": "Settings",
+    "theme": "Theme",
+    "language": "Language",
+    "dark": "Dark",
+    "light": "Light",
+    "system": "System",
+    "exportData": "Export Demo Data",
+    "importData": "Import Demo Data"
+  },
+  "session": {
+    "id": "Session",
+    "demo": "DEMO"
+  },
+  "notifications": {
+    "catTrade": "CAT executed trade → +0.8%",
+    "depositSuccess": "Deposit successful",
+    "sendSuccess": "Send successful",
+    "swapSuccess": "Swap successful",
+    "error": "An error occurred"
+  },
+  "validation": {
+    "insufficientFunds": "Insufficient funds",
+    "invalidAmount": "Invalid amount",
+    "required": "Required field"
+  },
+  "common": {
+    "loading": "Loading...",
+    "save": "Save",
+    "cancel": "Cancel",
+    "ok": "OK",
+    "yes": "Yes",
+    "no": "No"
+  }
+}

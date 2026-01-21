@@ -1,13 +1,13 @@
 /**
- * AnomCAT v1.01 - Enterprise Crypto Dashboard
+ * AnomCAT v1.03 - Enterprise Crypto Dashboard
  * Main Application JavaScript
  * 
  * Core functionality for the AnomCAT crypto trading bot dashboard.
  * Handles global state management, currency toggle, portfolio updates,
- * and shared functionality across all pages.
+ * i18n, theme management, C-A-T account features, and shared functionality.
  * 
  * @module AnomCAT
- * @version 1.01
+ * @version 1.03
  */
 
 // ============================================
@@ -612,6 +612,455 @@ AnomCAT.generateChartData = function(days = 30) {
     }
     
     return data;
+};
+
+// ============================================
+// v1.03 Features
+// ============================================
+
+// ============================================
+// i18n - Internationalization Support
+// ============================================
+AnomCAT.i18n = {
+    currentLang: 'fi',  // Default to Finnish
+    translations: {},
+    
+    async init() {
+        // Load language from storage or use default
+        const savedLang = localStorage.getItem('anomcat_language') || 'fi';
+        await this.loadLanguage(savedLang);
+    },
+    
+    async loadLanguage(lang) {
+        try {
+            const response = await fetch(`i18n/${lang}.json`);
+            if (response.ok) {
+                this.translations = await response.json();
+                this.currentLang = lang;
+                localStorage.setItem('anomcat_language', lang);
+                // Dispatch event for UI updates
+                window.dispatchEvent(new CustomEvent('languageChanged', { detail: { lang } }));
+            }
+        } catch (e) {
+            console.log('Could not load language file:', e.message);
+            // Fallback to English if Finnish fails
+            if (lang !== 'en') {
+                await this.loadLanguage('en');
+            }
+        }
+    },
+    
+    t(key) {
+        const keys = key.split('.');
+        let value = this.translations;
+        
+        for (const k of keys) {
+            if (value && typeof value === 'object') {
+                value = value[k];
+            } else {
+                return key; // Return key if translation not found
+            }
+        }
+        
+        return value || key;
+    }
+};
+
+// Shorthand function for translations
+window.t = (key) => AnomCAT.i18n.t(key);
+
+// ============================================
+// Theme Management
+// ============================================
+AnomCAT.theme = {
+    current: 'system', // 'dark', 'light', or 'system'
+    
+    init() {
+        const savedTheme = localStorage.getItem('anomcat_theme') || 'system';
+        this.setTheme(savedTheme, false);
+    },
+    
+    setTheme(theme, save = true) {
+        this.current = theme;
+        
+        if (save) {
+            localStorage.setItem('anomcat_theme', theme);
+        }
+        
+        // Apply theme
+        const isDark = theme === 'dark' || 
+                      (theme === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches);
+        
+        document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
+        
+        // Dispatch event
+        window.dispatchEvent(new CustomEvent('themeChanged', { detail: { theme: isDark ? 'dark' : 'light' } }));
+    },
+    
+    toggle() {
+        const newTheme = this.current === 'dark' ? 'light' : 'dark';
+        this.setTheme(newTheme);
+    }
+};
+
+// Listen for system theme changes
+window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+    if (AnomCAT.theme.current === 'system') {
+        AnomCAT.theme.setTheme('system', false);
+    }
+});
+
+// ============================================
+// Session Management
+// ============================================
+AnomCAT.session = {
+    id: null,
+    
+    init() {
+        // Generate or retrieve session ID
+        let sessionId = sessionStorage.getItem('anomcat_session_id');
+        if (!sessionId) {
+            sessionId = this.generateSessionId();
+            sessionStorage.setItem('anomcat_session_id', sessionId);
+        }
+        this.id = sessionId;
+    },
+    
+    generateSessionId() {
+        const prefix = 'DEMO';
+        const random = Math.random().toString(36).substring(2, 7).toUpperCase();
+        return `${prefix}-${random}`;
+    },
+    
+    getDisplayId() {
+        return this.id;
+    }
+};
+
+// ============================================
+// Performance Chart Generation
+// ============================================
+AnomCAT.generatePerformance = function(days = 30) {
+    // Check if we already have generated data in localStorage
+    const stored = localStorage.getItem('perf_demo');
+    if (stored) {
+        try {
+            return JSON.parse(stored);
+        } catch (e) {
+            // Continue to generate new data
+        }
+    }
+    
+    // Generate smoothed random performance curve
+    const points = [];
+    let value = 100; // start at 100%
+    
+    for (let i = 0; i < days; i++) {
+        // Small random changes with occasional dips/peaks
+        const noise = (Math.random() - 0.45) * (i < 5 ? 0.6 : 1.2);
+        value = Math.max(50, value + noise);
+        points.push({ x: i, y: parseFloat(value.toFixed(2)) });
+    }
+    
+    // Apply smoothing (moving average)
+    const smooth = points.map((p, idx, arr) => {
+        const window = arr.slice(Math.max(0, idx - 2), idx + 1);
+        const avg = window.reduce((s, q) => s + q.y, 0) / window.length;
+        return { x: p.x, y: parseFloat(avg.toFixed(2)) };
+    });
+    
+    // Save to localStorage
+    localStorage.setItem('perf_demo', JSON.stringify(smooth));
+    return smooth;
+};
+
+// ============================================
+// Bootstrap Data from JSON Files
+// ============================================
+AnomCAT.bootstrapData = async function() {
+    // Check if we've already bootstrapped
+    if (localStorage.getItem('anomcat_bootstrapped')) {
+        return;
+    }
+    
+    try {
+        // Load accounts
+        const accountsResp = await fetch('data/accounts.json');
+        if (accountsResp.ok) {
+            const accountsData = await accountsResp.json();
+            localStorage.setItem('accounts', JSON.stringify(accountsData.accounts));
+        }
+        
+        // Load portfolio
+        const portfolioResp = await fetch('data/portfolio.json');
+        if (portfolioResp.ok) {
+            const portfolioData = await portfolioResp.json();
+            localStorage.setItem('portfolio_data', JSON.stringify(portfolioData));
+            // Update AnomCAT state
+            this.btcToEurRate = portfolioData.btc_price || DEFAULT_BTC_EUR_RATE;
+        }
+        
+        // Load transactions
+        const transactionsResp = await fetch('data/transactions.json');
+        if (transactionsResp.ok) {
+            const transactionsData = await transactionsResp.json();
+            localStorage.setItem('transactions', JSON.stringify(transactionsData.transactions));
+        }
+        
+        // Load performance data
+        const performanceResp = await fetch('data/performance.json');
+        if (performanceResp.ok) {
+            const performanceData = await performanceResp.json();
+            if (performanceData.data && performanceData.data.length > 0) {
+                localStorage.setItem('perf_demo', JSON.stringify(performanceData.data));
+            }
+        }
+        
+        // Mark as bootstrapped
+        localStorage.setItem('anomcat_bootstrapped', 'true');
+        console.log('Data bootstrapped from JSON files');
+    } catch (e) {
+        console.error('Failed to bootstrap data:', e);
+    }
+};
+
+// ============================================
+// Transaction Management (v1.03)
+// ============================================
+AnomCAT.sendTransaction = function(fromId, toId, amountBtc) {
+    const accounts = JSON.parse(localStorage.getItem('accounts') || '[]');
+    const from = accounts.find(a => a.id === fromId);
+    const to = accounts.find(a => a.id === toId);
+    
+    if (!from || !to || from.btc_balance < amountBtc) {
+        throw new Error('Insufficient funds');
+    }
+    
+    // Update balances
+    from.btc_balance -= amountBtc;
+    to.btc_balance += amountBtc;
+    
+    // Create transaction record
+    const tx = {
+        id: 'tx_' + Date.now(),
+        from: fromId,
+        to: toId,
+        amount_btc: amountBtc,
+        type: 'send',
+        label: fromId === 'cat' ? 'CAT' : 'Normal',
+        timestamp: new Date().toISOString()
+    };
+    
+    // Update localStorage
+    const txs = JSON.parse(localStorage.getItem('transactions') || '[]');
+    txs.unshift(tx);
+    localStorage.setItem('transactions', JSON.stringify(txs));
+    localStorage.setItem('accounts', JSON.stringify(accounts));
+    
+    return tx;
+};
+
+AnomCAT.receiveTransaction = function(toId, amountBtc) {
+    const accounts = JSON.parse(localStorage.getItem('accounts') || '[]');
+    const to = accounts.find(a => a.id === toId);
+    
+    if (!to) {
+        throw new Error('Account not found');
+    }
+    
+    // Update balance
+    to.btc_balance += amountBtc;
+    
+    // Create transaction record
+    const tx = {
+        id: 'tx_' + Date.now(),
+        from: 'external',
+        to: toId,
+        amount_btc: amountBtc,
+        type: 'receive',
+        timestamp: new Date().toISOString()
+    };
+    
+    // Update localStorage
+    const txs = JSON.parse(localStorage.getItem('transactions') || '[]');
+    txs.unshift(tx);
+    localStorage.setItem('transactions', JSON.stringify(txs));
+    localStorage.setItem('accounts', JSON.stringify(accounts));
+    
+    return tx;
+};
+
+AnomCAT.swapTransaction = function(fromToken, toToken, amount) {
+    // Demo swap - just create a transaction record
+    const tx = {
+        id: 'tx_' + Date.now(),
+        from: fromToken,
+        to: toToken,
+        amount: amount,
+        type: 'swap',
+        timestamp: new Date().toISOString()
+    };
+    
+    const txs = JSON.parse(localStorage.getItem('transactions') || '[]');
+    txs.unshift(tx);
+    localStorage.setItem('transactions', JSON.stringify(txs));
+    
+    return tx;
+};
+
+// ============================================
+// CAT Account Functions
+// ============================================
+AnomCAT.cat = {
+    getAccount() {
+        const accounts = JSON.parse(localStorage.getItem('accounts') || '[]');
+        return accounts.find(a => a.id === 'cat');
+    },
+    
+    getAvailable() {
+        const cat = this.getAccount();
+        return cat ? cat.available_btc : 0;
+    },
+    
+    isAutoTradeEnabled() {
+        const cat = this.getAccount();
+        return cat ? cat.auto_trade : false;
+    },
+    
+    toggleAutoTrade() {
+        const accounts = JSON.parse(localStorage.getItem('accounts') || '[]');
+        const cat = accounts.find(a => a.id === 'cat');
+        if (cat) {
+            cat.auto_trade = !cat.auto_trade;
+            localStorage.setItem('accounts', JSON.stringify(accounts));
+            
+            // Start/stop auto-trade simulation
+            if (cat.auto_trade) {
+                this.startAutoTrade();
+            } else {
+                this.stopAutoTrade();
+            }
+        }
+    },
+    
+    startAutoTrade() {
+        // Simulate auto-trading with interval
+        if (this.tradeInterval) {
+            clearInterval(this.tradeInterval);
+        }
+        
+        this.tradeInterval = setInterval(() => {
+            // Randomly execute a trade (10% chance per check)
+            if (Math.random() > 0.9) {
+                this.simulateTrade();
+            }
+        }, 60000); // Check every minute
+    },
+    
+    stopAutoTrade() {
+        if (this.tradeInterval) {
+            clearInterval(this.tradeInterval);
+            this.tradeInterval = null;
+        }
+    },
+    
+    simulateTrade() {
+        const cat = this.getAccount();
+        if (!cat || !cat.auto_trade) return;
+        
+        // Create a simulated CAT trade notification
+        const notification = {
+            type: 'cat_trade',
+            message: t('notifications.catTrade'),
+            timestamp: new Date().toISOString()
+        };
+        
+        // Dispatch notification event
+        window.dispatchEvent(new CustomEvent('catNotification', { detail: notification }));
+        
+        console.log('CAT auto-trade executed:', notification);
+    }
+};
+
+// ============================================
+// Data Export/Import
+// ============================================
+AnomCAT.exportData = function() {
+    const data = {
+        accounts: localStorage.getItem('accounts'),
+        portfolio: localStorage.getItem('portfolio_data'),
+        transactions: localStorage.getItem('transactions'),
+        performance: localStorage.getItem('perf_demo'),
+        settings: {
+            language: localStorage.getItem('anomcat_language'),
+            theme: localStorage.getItem('anomcat_theme'),
+            currency: localStorage.getItem('anomcat_currency')
+        }
+    };
+    
+    const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `anomcat-demo-data-${Date.now()}.json`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+};
+
+AnomCAT.importData = function(file) {
+    return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            try {
+                const data = JSON.parse(e.target.result);
+                
+                // Import data to localStorage
+                if (data.accounts) localStorage.setItem('accounts', data.accounts);
+                if (data.portfolio) localStorage.setItem('portfolio_data', data.portfolio);
+                if (data.transactions) localStorage.setItem('transactions', data.transactions);
+                if (data.performance) localStorage.setItem('perf_demo', data.performance);
+                if (data.settings) {
+                    if (data.settings.language) localStorage.setItem('anomcat_language', data.settings.language);
+                    if (data.settings.theme) localStorage.setItem('anomcat_theme', data.settings.theme);
+                    if (data.settings.currency) localStorage.setItem('anomcat_currency', data.settings.currency);
+                }
+                
+                resolve();
+            } catch (err) {
+                reject(err);
+            }
+        };
+        reader.onerror = reject;
+        reader.readAsText(file);
+    });
+};
+
+// ============================================
+// Enhanced Initialization for v1.03
+// ============================================
+const originalInit = AnomCAT.init;
+AnomCAT.init = async function() {
+    // Bootstrap data from JSON files
+    await this.bootstrapData();
+    
+    // Initialize i18n
+    await this.i18n.init();
+    
+    // Initialize theme
+    this.theme.init();
+    
+    // Initialize session
+    this.session.init();
+    
+    // Call original init
+    originalInit.call(this);
+    
+    // Start CAT auto-trade if enabled
+    if (this.cat.isAutoTradeEnabled()) {
+        this.cat.startAutoTrade();
+    }
 };
 
 // Make AnomCAT globally available

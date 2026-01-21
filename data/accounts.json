@@ -1,0 +1,19 @@
+{
+  "accounts": [
+    {
+      "id": "main",
+      "name": "Päätili",
+      "currency": "EUR",
+      "btc_balance": 0.2145,
+      "fiat_balance": 12500.25
+    },
+    {
+      "id": "cat",
+      "name": "C-A-T",
+      "currency": "BTC",
+      "btc_balance": 0.0342,
+      "available_btc": 0.0200,
+      "auto_trade": true
+    }
+  ]
+}

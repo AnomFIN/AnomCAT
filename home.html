@@ -17,6 +17,8 @@
     <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%233b82f6'/%3E%3Ctext x='50' y='65' font-size='50' text-anchor='middle' fill='white'%3EA%3C/text%3E%3C/svg%3E">
     
     <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/cat.css">
+    <link rel="stylesheet" href="assets/css/modals.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
@@ -28,6 +30,9 @@
                     <div class="logo-icon">A</div>
                     <span>AnomCAT</span>
                 </a>
+                <span class="session-id" id="sessionId" style="margin-left: 16px; font-size: 12px; color: var(--text-tertiary);">
+                    Istunto: <span id="sessionIdValue">DEMO-XXXXX</span>
+                </span>
             </div>
             <div class="top-bar-right">
                 <div class="currency-toggle">
@@ -43,9 +48,15 @@
             <div class="card mb-6">
                 <div class="card-header">
                     <div>
-                        <p class="card-subtitle">Total Portfolio</p>
+                        <p class="card-subtitle" data-i18n="portfolio.totalValue">Kokonaisarvo (demo)</p>
                         <h2 class="balance-large" data-balance="main">0.00000000 BTC</h2>
                         <p class="balance-secondary" data-balance="secondary">€0.00</p>
+                        <p class="btc-price-label" style="font-size: 12px; color: var(--text-tertiary); margin-top: 8px;">
+                            <span data-i18n="portfolio.btcPrice">BTC-kurssi (demo)</span>: <span id="btcPrice">€0.00</span>
+                        </p>
+                        <p style="font-size: 11px; color: var(--text-muted); margin-top: 4px;" data-i18n="portfolio.priceUpdated">
+                            Kurssi päivitetty demosta
+                        </p>
                     </div>
                     <span class="badge badge-success" data-stat="status">Active</span>
                 </div>
@@ -68,32 +79,33 @@
 
             <!-- Quick Actions -->
             <div class="quick-actions">
+                <a href="#cat-funds" class="quick-action cat-action" id="catFundsAction">
+                    <div class="quick-action-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"/>
+                            <path d="M16 8h-6a2 2 0 100 4h4a2 2 0 110 4H8"/>
+                            <path d="M12 18V6"/>
+                        </svg>
+                    </div>
+                    <span class="quick-action-label" data-i18n="cat.showAvailable">Näytä C-A-T</span>
+                </a>
                 <a href="#deposit" class="quick-action" id="depositAction">
                     <div class="quick-action-icon deposit">
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <path d="M12 5v14M5 12h14"/>
                         </svg>
                     </div>
-                    <span class="quick-action-label">Deposit</span>
+                    <span class="quick-action-label" data-i18n="actions.receive">Vastaanota</span>
                 </a>
-                <a href="#withdraw" class="quick-action">
+                <a href="#send" class="quick-action" id="sendAction">
                     <div class="quick-action-icon withdraw">
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <path d="M5 12h14"/>
                         </svg>
                     </div>
-                    <span class="quick-action-label">Withdraw</span>
+                    <span class="quick-action-label" data-i18n="actions.send">Lähetä</span>
                 </a>
-                <a href="#trade" class="quick-action">
-                    <div class="quick-action-icon trade">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/>
-                            <polyline points="17 6 23 6 23 12"/>
-                        </svg>
-                    </div>
-                    <span class="quick-action-label">Trade</span>
-                </a>
-                <a href="#swap" class="quick-action">
+                <a href="#swap" class="quick-action" id="swapAction">
                     <div class="quick-action-icon swap">
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <polyline points="17 1 21 5 17 9"/>
@@ -102,7 +114,7 @@
                             <path d="M21 13v2a4 4 0 0 1-4 4H3"/>
                         </svg>
                     </div>
-                    <span class="quick-action-label">Swap</span>
+                    <span class="quick-action-label" data-i18n="actions.swap">Vaihda</span>
                 </a>
             </div>
 
@@ -127,27 +139,41 @@
             </div>
 
             <!-- Bot Status Card -->
-            <div class="card mb-6">
-                <div class="card-header">
-                    <h3 class="card-title">CAT Bot Trading</h3>
-                    <span class="badge badge-success" data-stat="status">Active</span>
+            <div class="card mb-6 cat-card">
+                <div class="card-header cat-card-header">
+                    <h3 class="card-title cat-card-title">
+                        <span class="cat-icon">C</span>
+                        <span data-i18n="cat.trading">CAT Bot Kaupankäynti</span>
+                    </h3>
+                    <span class="cat-badge">
+                        <span data-i18n="cat.badge">CAT</span>
+                    </span>
                 </div>
                 <div class="stat-grid">
                     <div class="stat-item">
-                        <div class="stat-label">Strategy</div>
-                        <div class="stat-value" style="font-size: 0.875rem;">Momentum + Mean Reversion</div>
+                        <div class="stat-label" data-i18n="cat.balance">Saldo</div>
+                        <div class="stat-value cat-balance" id="catBalance">0.00000000 BTC</div>
                     </div>
                     <div class="stat-item">
-                        <div class="stat-label">Trades</div>
-                        <div class="stat-value" data-stat="trades">0</div>
+                        <div class="stat-label" data-i18n="cat.available">Käytettävissä</div>
+                        <div class="stat-value cat-balance" id="catAvailable">0.00000000 BTC</div>
                     </div>
                     <div class="stat-item">
-                        <div class="stat-label">Win Rate</div>
-                        <div class="stat-value" data-stat="winrate">--</div>
+                        <div class="stat-label" data-i18n="cat.status">Tila</div>
+                        <div class="stat-value">
+                            <div class="cat-status" id="catStatus">
+                                <div class="cat-status-dot"></div>
+                                <span data-i18n="cat.active">Aktiivinen</span>
+                            </div>
+                        </div>
                     </div>
                     <div class="stat-item">
-                        <div class="stat-label">Expected</div>
-                        <div class="stat-value text-success">+1.3%/mo</div>
+                        <div class="stat-label">Auto-Trade</div>
+                        <div class="stat-value">
+                            <label class="cat-toggle-switch" id="catAutoTradeToggle">
+                                <input type="checkbox" style="display:none;" id="catAutoTradeCheckbox">
+                            </label>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -213,15 +239,161 @@
         </nav>
     </div>
 
+    <!-- CAT Funds Modal -->
+    <div class="cat-modal" id="catModal">
+        <div class="cat-modal-content">
+            <div class="cat-modal-header">
+                <h3 class="cat-modal-title">
+                    <span class="cat-icon">C</span>
+                    <span data-i18n="cat.name">C-A-T</span>
+                </h3>
+                <button class="cat-modal-close" id="catModalClose">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M18 6L6 18M6 6l12 12"/>
+                    </svg>
+                </button>
+            </div>
+            
+            <div class="cat-stats-grid">
+                <div class="cat-stat-item">
+                    <div class="cat-stat-label" data-i18n="cat.balance">Saldo</div>
+                    <div class="cat-stat-value" id="catModalBalance">0.00000000</div>
+                </div>
+                <div class="cat-stat-item">
+                    <div class="cat-stat-label" data-i18n="cat.available">Käytettävissä</div>
+                    <div class="cat-stat-value" id="catModalAvailable">0.00000000</div>
+                </div>
+            </div>
+            
+            <button class="cat-action-btn" id="catTransferBtn" style="width: 100%; margin-top: 24px; justify-content: center;">
+                <span data-i18n="cat.transferToMain">Siirrä Cat → Päätili</span>
+            </button>
+        </div>
+    </div>
+
     <script src="assets/js/app.js"></script>
+    <script src="assets/js/modals.js"></script>
     <script>
         // Chart instance
         let portfolioChart = null;
         
+        // Update session ID display
+        document.addEventListener('DOMContentLoaded', function() {
+            if (AnomCAT.session && AnomCAT.session.id) {
+                const sessionIdEl = document.getElementById('sessionIdValue');
+                if (sessionIdEl) {
+                    sessionIdEl.textContent = AnomCAT.session.id;
+                }
+            }
+            
+            // Load portfolio data and update BTC price
+            const portfolioData = localStorage.getItem('portfolio_data');
+            if (portfolioData) {
+                try {
+                    const data = JSON.parse(portfolioData);
+                    AnomCAT.btcToEurRate = data.btc_price || 50250.12;
+                    const btcPriceEl = document.getElementById('btcPrice');
+                    if (btcPriceEl) {
+                        btcPriceEl.textContent = '€' + AnomCAT.btcToEurRate.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+                    }
+                } catch (e) {
+                    console.error('Failed to parse portfolio data:', e);
+                }
+            }
+            
+            // Load and display CAT account data
+            updateCatDisplay();
+        });
+        
+        function updateCatDisplay() {
+            const accounts = JSON.parse(localStorage.getItem('accounts') || '[]');
+            const catAccount = accounts.find(a => a.id === 'cat');
+            
+            if (catAccount) {
+                const catBalanceEl = document.getElementById('catBalance');
+                const catAvailableEl = document.getElementById('catAvailable');
+                const catModalBalanceEl = document.getElementById('catModalBalance');
+                const catModalAvailableEl = document.getElementById('catModalAvailable');
+                const catAutoTradeCheckbox = document.getElementById('catAutoTradeCheckbox');
+                const catAutoTradeToggle = document.getElementById('catAutoTradeToggle');
+                const catStatusEl = document.getElementById('catStatus');
+                
+                if (catBalanceEl) catBalanceEl.textContent = AnomCAT.formatBTC(catAccount.btc_balance);
+                if (catAvailableEl) catAvailableEl.textContent = AnomCAT.formatBTC(catAccount.available_btc);
+                if (catModalBalanceEl) catModalBalanceEl.textContent = catAccount.btc_balance.toFixed(8);
+                if (catModalAvailableEl) catModalAvailableEl.textContent = catAccount.available_btc.toFixed(8);
+                
+                if (catAutoTradeCheckbox) {
+                    catAutoTradeCheckbox.checked = catAccount.auto_trade;
+                    if (catAutoTradeToggle) {
+                        catAutoTradeToggle.classList.toggle('active', catAccount.auto_trade);
+                    }
+                }
+                
+                if (catStatusEl) {
+                    catStatusEl.classList.toggle('idle', !catAccount.auto_trade);
+                    const statusText = catStatusEl.querySelector('span');
+                    if (statusText) {
+                        statusText.textContent = catAccount.auto_trade ? (t('cat.active') || 'Aktiivinen') : (t('cat.idle') || 'Pois päältä');
+                    }
+                }
+            }
+        }
+        
+        // CAT Modal handlers
+        document.getElementById('catFundsAction').addEventListener('click', function(e) {
+            e.preventDefault();
+            document.getElementById('catModal').classList.add('show');
+        });
+        
+        document.getElementById('catModalClose').addEventListener('click', function() {
+            document.getElementById('catModal').classList.remove('show');
+        });
+        
+        document.getElementById('catModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                this.classList.remove('show');
+            }
+        });
+        
+        // CAT Transfer button
+        document.getElementById('catTransferBtn').addEventListener('click', function() {
+            const catAccount = AnomCAT.cat.getAccount();
+            if (catAccount && catAccount.available_btc > 0) {
+                try {
+                    AnomCAT.sendTransaction('cat', 'main', catAccount.available_btc);
+                    alert(t('notifications.sendSuccess') || 'Siirto onnistui!');
+                    updateCatDisplay();
+                    document.getElementById('catModal').classList.remove('show');
+                } catch (e) {
+                    alert(t('validation.insufficientFunds') || 'Virhe siirrossa');
+                }
+            }
+        });
+        
+        // CAT Auto-trade toggle
+        document.getElementById('catAutoTradeToggle').addEventListener('click', function() {
+            AnomCAT.cat.toggleAutoTrade();
+            updateCatDisplay();
+        });
+        
         // Initialize chart
         function initChart() {
             const ctx = document.getElementById('portfolioChart').getContext('2d');
-            const chartData = AnomCAT.generateChartData(30);
+            
+            // Try to get performance data, generate if not exists
+            let perfData = localStorage.getItem('perf_demo');
+            let chartData;
+            
+            if (perfData) {
+                try {
+                    chartData = JSON.parse(perfData);
+                } catch (e) {
+                    chartData = AnomCAT.generatePerformance(30);
+                }
+            } else {
+                chartData = AnomCAT.generatePerformance(30);
+            }
             
             const gradient = ctx.createLinearGradient(0, 0, 0, 250);
             gradient.addColorStop(0, 'rgba(59, 130, 246, 0.3)');
@@ -230,13 +402,10 @@
             portfolioChart = new Chart(ctx, {
                 type: 'line',
                 data: {
-                    labels: chartData.map(d => {
-                        const date = new Date(d.time);
-                        return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
-                    }),
+                    labels: chartData.map(d => `Day ${d.x + 1}`),
                     datasets: [{
-                        label: 'Portfolio Value',
-                        data: chartData.map(d => d.value),
+                        label: t('portfolio.performance') || 'Salkun kehitys',
+                        data: chartData.map(d => d.y),
                         borderColor: '#3b82f6',
                         backgroundColor: gradient,
                         borderWidth: 2,
@@ -270,9 +439,7 @@
                             displayColors: false,
                             callbacks: {
                                 label: function(context) {
-                                    return AnomCAT.currency === 'EUR' 
-                                        ? AnomCAT.formatEUR(context.raw)
-                                        : AnomCAT.formatBTC(context.raw);
+                                    return context.raw.toFixed(2) + '%';
                                 }
                             }
                         }
@@ -304,10 +471,7 @@
                                 },
                                 maxTicksLimit: 5,
                                 callback: function(value) {
-                                    if (AnomCAT.currency === 'EUR') {
-                                        return '€' + value.toLocaleString();
-                                    }
-                                    return value.toFixed(4) + ' BTC';
+                                    return value.toFixed(0) + '%';
                                 }
                             }
                         }
@@ -319,13 +483,9 @@
         // Update chart on currency change
         AnomCAT.updateChart = function() {
             if (!portfolioChart) return;
-            
-            const chartData = this.generateChartData(30);
-            portfolioChart.data.labels = chartData.map(d => {
-                const date = new Date(d.time);
-                return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
-            });
-            portfolioChart.data.datasets[0].data = chartData.map(d => d.value);
+            const chartData = AnomCAT.generatePerformance(30);
+            portfolioChart.data.labels = chartData.map(d => `Day ${d.x + 1}`);
+            portfolioChart.data.datasets[0].data = chartData.map(d => d.y);
             portfolioChart.update('none');
         };
         
@@ -347,14 +507,26 @@
                 document.getElementById('depositAmount').value = '';
                 AnomCAT.updateChart();
             } else {
-                alert('Please enter a valid amount greater than 0');
+                alert(t('validation.invalidAmount') || 'Please enter a valid amount greater than 0');
             }
         });
         
         // Scroll to deposit
         document.getElementById('depositAction').addEventListener('click', function(e) {
             e.preventDefault();
-            document.getElementById('depositCard').scrollIntoView({ behavior: 'smooth' });
+            AnomModals.showReceiveModal();
+        });
+        
+        // Send action
+        document.getElementById('sendAction').addEventListener('click', function(e) {
+            e.preventDefault();
+            AnomModals.showSendModal();
+        });
+        
+        // Swap action
+        document.getElementById('swapAction').addEventListener('click', function(e) {
+            e.preventDefault();
+            AnomModals.showSwapModal();
         });
         
         // Initialize
