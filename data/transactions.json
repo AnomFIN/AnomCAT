@@ -1,0 +1,31 @@
+{
+  "transactions": [
+    {
+      "id": "tx_001",
+      "from": "cat",
+      "to": "main",
+      "amount_btc": 0.005,
+      "type": "send",
+      "label": "Cat → Päätili",
+      "timestamp": "2025-11-24T22:12:00Z"
+    },
+    {
+      "id": "tx_002",
+      "from": "main",
+      "to": "external",
+      "amount_btc": 0.01,
+      "type": "send",
+      "label": "Lähetys ulkoiseen lompakkoon",
+      "timestamp": "2025-11-23T14:30:00Z"
+    },
+    {
+      "id": "tx_003",
+      "from": "external",
+      "to": "main",
+      "amount_btc": 0.05,
+      "type": "receive",
+      "label": "Vastaanotto",
+      "timestamp": "2025-11-22T09:15:00Z"
+    }
+  ]
+}
